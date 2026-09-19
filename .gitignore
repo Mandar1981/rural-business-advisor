@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+backend/models/*.pkl
+node_modules/
+frontend/dist/
+.env
+backend/.env
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

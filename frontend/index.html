@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ग्राम सलाहकार — Village Business Advisor | Code Ninjas · SIH 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:wght@400;700&family=Mukta:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#F4EEE0;--bg-warm:#EDE4CF;--panel:#FFFCF5;--panel-2:#FBF5E5;--ink:#16241A;--ink-soft:#4A5A4D;--muted:#7A877B;--forest:#15402D;--forest-dark:#0A2114;--forest-light:#2E6B4E;--sage:#8FA68E;--ochre:#DB8C1E;--ochre-dark:#A8630E;--clay:#B54A24;--clay-dark:#7F3116;--line:rgba(22,36,26,.12);--line-soft:rgba(22,36,26,.06);--shadow-sm:0 1px 3px rgba(22,36,26,.06);--shadow:0 6px 20px rgba(22,36,26,.08);--shadow-lg:0 20px 50px rgba(22,36,26,.15);--radius:14px;--radius-lg:22px;--radius-xl:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Mukta','Inter',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+.en{font-family:'Inter','Mukta',sans-serif}
+h1,h2,h3,h4{font-family:'Tiro Devanagari Hindi','Fraunces',serif;font-weight:400;color:var(--forest-dark);line-height:1.25}
+h1{font-size:clamp(2rem,4.6vw,3.2rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.4rem,3vw,1.95rem)}
+h3{font-size:1.15rem;font-weight:600}
+.en h1,.en h2,.en h3{font-family:'Fraunces','Tiro Devanagari Hindi',serif;font-weight:600}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+
+.bg-scenes{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-scene{position:absolute;inset:0;opacity:0;animation:sceneCycle 32s ease-in-out infinite}
+.bg-scene:nth-child(1){background-image:radial-gradient(ellipse at 30% 40%,rgba(219,140,30,.18),transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(46,107,78,.15),transparent 50%);animation-delay:0s}
+.bg-scene:nth-child(2){background-image:radial-gradient(ellipse at 70% 30%,rgba(181,74,36,.14),transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(21,64,45,.16),transparent 55%);animation-delay:8s}
+.bg-scene:nth-child(3){background-image:radial-gradient(ellipse at 50% 60%,rgba(201,162,39,.16),transparent 55%),radial-gradient(ellipse at 90% 20%,rgba(143,166,142,.18),transparent 50%);animation-delay:16s}
+.bg-scene:nth-child(4){background-image:radial-gradient(ellipse at 20% 70%,rgba(46,107,78,.16),transparent 55%),radial-gradient(ellipse at 75% 30%,rgba(219,140,30,.14),transparent 50%);animation-delay:24s}
+@keyframes sceneCycle{0%{opacity:0}8%{opacity:1}25%{opacity:1}33%{opacity:0}100%{opacity:0}}
+
+.bg-icons{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-icons .ic{position:absolute;font-size:80px;opacity:.05;animation:floatY 20s ease-in-out infinite}
+.bg-icons .ic:nth-child(1){top:10%;left:5%;animation-delay:0s;font-size:100px}
+.bg-icons .ic:nth-child(2){top:30%;right:8%;animation-delay:-3s;font-size:120px}
+.bg-icons .ic:nth-child(3){top:60%;left:3%;animation-delay:-6s;font-size:90px}
+.bg-icons .ic:nth-child(4){top:75%;right:5%;animation-delay:-9s;font-size:110px}
+.bg-icons .ic:nth-child(5){top:45%;left:48%;animation-delay:-12s;font-size:140px;opacity:.03}
+.bg-icons .ic:nth-child(6){top:85%;left:20%;animation-delay:-15s;font-size:85px}
+.bg-icons .ic:nth-child(7){top:18%;left:60%;animation-delay:-18s;font-size:95px}
+@keyframes floatY{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(15px,-25px) rotate(5deg)}66%{transform:translate(-10px,20px) rotate(-3deg)}}
+.page-shell{position:relative;z-index:1}
+
+header{position:sticky;top:0;z-index:100;background:rgba(244,238,224,.9);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line-soft)}
+.header-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-text{display:flex;flex-direction:column;line-height:1.15}
+.brand-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1.22rem;color:var(--forest-dark);font-weight:400}
+.brand-sub{font-size:.66rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:800;display:flex;align-items:center;gap:6px}
+.brand-sub .cn-badge{background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;padding:2px 8px;border-radius:8px;letter-spacing:.05em;font-size:.6rem}
+.lang-group{display:flex;gap:3px;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:3px;box-shadow:var(--shadow-sm)}
+.lang-btn{padding:7px 13px;font-size:.83rem;font-weight:600;color:var(--ink-soft);border-radius:20px;transition:.2s}
+.lang-btn:hover{color:var(--forest);background:var(--panel-2)}
+.lang-btn.active{background:var(--forest);color:#fff;box-shadow:0 2px 8px rgba(21,64,45,.3)}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+.hero{padding:60px 0 40px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(219,140,30,.14),rgba(46,107,78,.1));border:1px solid rgba(219,140,30,.32);padding:8px 16px;border-radius:20px;font-size:.83rem;color:var(--ochre-dark);font-weight:700;margin-bottom:22px}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--ochre);animation:pulse 2s infinite;box-shadow:0 0 0 3px rgba(219,140,30,.22)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+.hero h1{max-width:22ch;margin-bottom:20px}
+.hero h1 em{font-style:italic;background:linear-gradient(120deg,var(--clay),var(--ochre));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:'Fraunces',serif;font-weight:900}
+.hero-lead{font-size:1.08rem;color:var(--ink-soft);max-width:56ch;margin-bottom:32px;line-height:1.7}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 28px;border-radius:32px;font-weight:600;font-size:1rem;transition:transform .15s,box-shadow .25s}
+.btn-primary{background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;box-shadow:0 4px 0 var(--forest-dark),0 8px 24px rgba(21,64,45,.25)}
+.btn-primary:hover:not(:disabled){transform:translateY(-1px)}
+.btn-primary:active:not(:disabled){transform:translateY(2px);box-shadow:0 2px 0 var(--forest-dark)}
+.btn-primary:disabled{background:#C4BBA6;box-shadow:none;cursor:not-allowed}
+.btn-lg{padding:18px 36px;font-size:1.1rem;width:100%}
+.btn-ghost{color:var(--clay);text-decoration:underline;text-underline-offset:4px;font-size:.98rem;font-weight:600}
+.btn-white{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)}
+.btn-white:hover{background:rgba(255,255,255,.25)}
+.btn-white.speaking{background:var(--ochre);border-color:var(--ochre)}
+.btn-ochre{background:linear-gradient(135deg,var(--ochre),var(--ochre-dark));color:#fff;box-shadow:0 3px 0 var(--ochre-dark)}
+.btn-ochre:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ochre-dark)}
+
+.hero-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:44px}
+.feature{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line-soft);border-radius:var(--radius);padding:20px;transition:.3s}
+.feature:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.feature-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.25rem;background:linear-gradient(135deg,var(--bg-warm),var(--panel));border:1px solid var(--line-soft);margin-bottom:12px}
+.feature h4{font-size:.98rem;margin-bottom:5px;font-family:'Mukta',sans-serif;font-weight:700;color:var(--forest-dark)}
+.feature p{font-size:.87rem;color:var(--ink-soft);line-height:1.55}
+
+.progress-track{display:flex;align-items:center;background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:16px 20px;margin:32px 0 22px;box-shadow:var(--shadow-sm)}
+.progress-step{display:flex;align-items:center;gap:9px;flex:1;font-size:.85rem;color:var(--muted);font-weight:500}
+.progress-step .num{width:28px;height:28px;border-radius:50%;background:var(--bg-warm);color:var(--muted);display:grid;place-items:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.progress-step.active .num{background:linear-gradient(135deg,var(--ochre),var(--ochre-dark));color:#fff;box-shadow:0 0 0 4px rgba(219,140,30,.15)}
+.progress-step.active{color:var(--forest);font-weight:600}
+.progress-line{flex:1;height:2px;background:var(--bg-warm);margin:0 12px;min-width:12px;border-radius:1px}
+
+.section{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius-xl);padding:32px 30px;margin-bottom:22px;box-shadow:var(--shadow);position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--forest) 0%,var(--forest-light) 30%,var(--ochre) 65%,var(--clay) 100%)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.section-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px dashed var(--line-soft)}
+.section-icon{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;display:grid;place-items:center;font-size:1.25rem;flex-shrink:0}
+.section-head h2{font-size:1.25rem;margin:0;flex:1}
+.section-head .step-tag{font-size:.72rem;color:var(--ochre-dark);background:linear-gradient(135deg,#FDF4E3,#F7EAD1);padding:5px 13px;border-radius:20px;font-weight:700;border:1px solid rgba(219,140,30,.2)}
+
+.field{margin-bottom:22px}
+.field label{display:block;font-weight:600;margin-bottom:9px;font-size:.95rem;color:var(--forest-dark)}
+.field label .req{color:#B54A24;font-weight:800;margin-left:3px}
+.field .hint{font-size:.83rem;color:var(--muted);margin-top:6px;line-height:1.5}
+.input-row{display:flex;gap:9px;align-items:stretch}
+.input-row input,.input-row select{flex:1;padding:14px 16px;font-size:1rem;border:1.5px solid var(--line);border-radius:12px;background:var(--panel-2);color:var(--ink);transition:.18s}
+.input-row input:focus,.input-row select:focus{outline:3px solid rgba(219,140,30,.2);outline-offset:0;border-color:var(--ochre);background:#fff}
+.input-row input::placeholder{color:var(--muted)}
+.input-row select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%234A5A4D' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:11px;padding-right:38px}
+.input-row input.error,.input-row select.error{border-color:#B54A24!important;background:#FDF0EB!important}
+.field.error label{color:#B54A24}
+.field .error-msg{font-size:.82rem;color:#B54A24;margin-top:6px;display:none;font-weight:600}
+.field.error .error-msg{display:block}
+.field-error-summary{background:linear-gradient(135deg,#FDF0EB,#FCE6DA);border-left:4px solid #B54A24;padding:16px 20px;border-radius:10px;margin-bottom:20px;font-size:.92rem;color:#7F3116;display:none}
+.field-error-summary.show{display:block;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.field-error-summary ul{margin:8px 0 0 20px;padding:0}
+.field-error-summary li{margin:3px 0;font-weight:500}
+
+.mic-btn{width:52px;flex-shrink:0;border:1.5px solid var(--forest);background:var(--panel-2);border-radius:12px;color:var(--forest);font-size:1.2rem;display:grid;place-items:center;transition:.2s}
+.mic-btn:hover:not(:disabled){background:var(--forest);color:#fff}
+.mic-btn.listening{background:var(--clay);border-color:var(--clay);color:#fff;animation:micPulse 1.2s infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(181,74,36,.5)}50%{box-shadow:0 0 0 12px rgba(181,74,36,0)}}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.chip-row{display:flex;flex-wrap:wrap;gap:9px}
+.chip{padding:12px 18px;border-radius:24px;border:1.5px solid var(--line);background:var(--panel-2);font-size:.94rem;color:var(--ink-soft);transition:.2s;display:inline-flex;align-items:center;gap:7px;font-weight:500}
+.chip:hover{border-color:var(--ochre);color:var(--forest);transform:translateY(-1px)}
+.chip.selected{background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;border-color:var(--forest);box-shadow:0 4px 14px rgba(21,64,45,.28)}
+.custom-input-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+.custom-input-row .sep{color:var(--muted);font-size:.9rem;white-space:nowrap}
+.custom-input-row input{flex:1;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--panel-2);font-size:.95rem;color:var(--ink)}
+
+#results{display:none;padding-bottom:80px}
+#results.show{display:block;animation:fadeUp .55s ease both}
+.report-header{background:radial-gradient(circle at 80% 10%,rgba(219,140,30,.32),transparent 45%),radial-gradient(circle at 10% 90%,rgba(62,143,101,.28),transparent 50%),linear-gradient(135deg,var(--forest),var(--forest-dark));color:#fff;border-radius:var(--radius-xl);padding:38px 32px;margin-bottom:26px;position:relative;overflow:hidden}
+.report-header::after{content:'🌾';position:absolute;bottom:-30px;left:-10px;font-size:180px;opacity:.06;transform:rotate(-15deg)}
+.report-header .label{font-size:.8rem;color:#B8CFC0;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.report-header h2{color:#fff;font-size:1.85rem;margin-bottom:10px;position:relative;z-index:1}
+.report-header .meta{display:flex;flex-wrap:wrap;gap:20px;font-size:.92rem;color:#D9E8DE;margin-top:16px;position:relative;z-index:1}
+.report-header .meta span{display:flex;align-items:center;gap:7px}
+.report-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;position:relative;z-index:1}
+.report-actions .btn{font-size:.92rem;padding:11px 20px}
+.report-lang-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;position:relative;z-index:1}
+.report-lang{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);padding:7px 10px 7px 14px;border-radius:24px;font-size:.85rem;color:#fff;backdrop-filter:blur(8px)}
+.report-lang label{color:#D9E8DE;font-weight:600;white-space:nowrap}
+.report-lang select{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 10px;border-radius:16px;font-size:.85rem;font-weight:600;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px;padding-right:26px}
+.report-lang select option{color:#1A2820;background:#fff}
+
+.result-card{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius-xl);padding:28px 26px;margin-bottom:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--forest) 0%,var(--ochre) 60%,var(--clay) 100%);opacity:.65}
+.result-card h3{display:flex;align-items:center;gap:11px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px dashed var(--line-soft);font-family:'Tiro Devanagari Hindi',serif;font-size:1.25rem;color:var(--forest-dark)}
+.result-card h3 .icon{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--bg-warm),var(--panel-2));color:var(--forest);display:grid;place-items:center;font-size:1.05rem;flex-shrink:0;border:1px solid var(--line-soft)}
+
+.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:18px}
+.fin-cell{background:var(--panel);padding:20px 22px}
+.fin-cell .label{font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+.fin-cell .value{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;color:var(--forest-dark);line-height:1.2}
+.fin-cell.wide{grid-column:1/-1;background:linear-gradient(135deg,var(--forest),var(--forest-dark));color:#fff}
+.fin-cell.wide .label{color:#B8CFC0}
+.fin-cell.wide .value{color:#fff;font-size:2rem}
+.fin-cell.emi{background:linear-gradient(135deg,#FDF4E3,#F7EAD1)}
+.fin-cell.emi .value{color:var(--ochre-dark)}
+
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.biz-card{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:.25s}
+.biz-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.biz-card.top-pick{border-color:var(--ochre);background:linear-gradient(135deg,#FDF4E3,#FBF5E5)}
+.biz-card .top-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,var(--ochre),var(--ochre-dark));color:#fff;font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:10px}
+.biz-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;display:grid;place-items:center;font-size:1.4rem;margin-bottom:12px}
+.biz-title{font-size:1rem;font-weight:700;color:var(--forest-dark);margin-bottom:4px;font-family:'Mukta',sans-serif}
+.biz-sub{font-size:.82rem;color:var(--muted);margin-bottom:14px}
+.biz-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.biz-stat{background:#fff;border-radius:8px;padding:8px 10px}
+.biz-stat .lbl{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase}
+.biz-stat .val{font-size:1rem;font-weight:700;color:var(--forest-dark);margin-top:2px;font-family:'Fraunces',serif}
+.biz-match{margin-top:12px}
+.biz-match-lbl{display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;color:var(--ink-soft);margin-bottom:5px}
+.biz-match-bar{height:8px;background:var(--bg-warm);border-radius:4px;overflow:hidden}
+.biz-match-fill{height:100%;background:linear-gradient(90deg,var(--ochre),var(--forest-light));border-radius:4px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.3,1)}
+.biz-why{font-size:.82rem;color:var(--ink-soft);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-soft);line-height:1.5}
+
+.gauge-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.gauge-canvas{width:200px;height:200px;flex-shrink:0;position:relative}
+.gauge-canvas canvas{width:100%!important;height:100%!important}
+.gauge-info{flex:1;min-width:200px}
+.gauge-title{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--forest-dark);margin-bottom:6px;font-weight:600}
+.gauge-desc{font-size:.9rem;color:var(--ink-soft);line-height:1.6;margin-bottom:10px}
+.gauge-tag{display:inline-block;background:rgba(219,140,30,.15);color:var(--ochre-dark);padding:4px 10px;border-radius:12px;font-size:.75rem;font-weight:700}
+
+.chart-wrap{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:14px;padding:20px;margin-top:16px}
+.chart-title{font-size:.92rem;font-weight:700;color:var(--forest-dark);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.chart-canvas-wrap{position:relative;height:280px}
+
+.scheme-list{display:flex;flex-direction:column;gap:14px}
+.scheme-item{display:flex;gap:14px;padding:16px 18px;background:var(--panel-2);border-radius:12px;border-left:4px solid var(--sage)}
+.scheme-item.recommended{background:linear-gradient(135deg,#FDF4E3,#F7EAD1);border-left-color:var(--ochre)}
+.scheme-item .scheme-badge{width:40px;height:40px;border-radius:12px;background:var(--panel);display:grid;place-items:center;flex-shrink:0;font-size:1.15rem;border:1px solid var(--line-soft)}
+.scheme-item h4{font-size:.98rem;margin-bottom:5px;font-family:'Mukta',sans-serif;font-weight:700;color:var(--forest-dark)}
+.scheme-item p{font-size:.87rem;color:var(--ink-soft);line-height:1.55}
+.scheme-item .tag{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:10px;background:linear-gradient(135deg,var(--ochre),var(--ochre-dark));color:#fff;margin-left:8px}
+
+.insight-list{display:flex;flex-direction:column;gap:16px}
+.insight{display:flex;gap:14px;padding-bottom:16px;border-bottom:1px dashed var(--line-soft)}
+.insight:last-child{border-bottom:none;padding-bottom:0}
+.insight-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--bg-warm),var(--panel-2));display:grid;place-items:center;font-size:1rem;flex-shrink:0;border:1px solid var(--line-soft)}
+.insight h4{font-size:.95rem;margin-bottom:4px;font-family:'Mukta',sans-serif;font-weight:700;color:var(--forest-dark)}
+.insight p{font-size:.91rem;color:var(--ink-soft);line-height:1.6}
+
+.action-list{counter-reset:step;display:flex;flex-direction:column;gap:12px}
+.action-item{display:flex;gap:14px;padding:16px 18px;background:var(--panel-2);border-radius:12px;counter-increment:step;border:1px solid var(--line-soft)}
+.action-item::before{content:counter(step);width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;display:grid;place-items:center;font-size:.85rem;font-weight:700;flex-shrink:0;font-family:'Inter',sans-serif}
+.action-item p{font-size:.93rem;color:var(--ink-soft);line-height:1.6}
+
+.disclaimer{padding:18px 20px;background:linear-gradient(135deg,#FDF4E3,#FCEBCB);border-left:4px solid var(--ochre);border-radius:10px;font-size:.9rem;color:#7A5A18;line-height:1.6;margin-top:20px}
+.disclaimer strong{color:var(--ochre-dark)}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,var(--forest-dark),var(--forest));color:#fff;padding:14px 24px;border-radius:14px;font-size:.92rem;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;transition:.3s;z-index:200;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.error{background:linear-gradient(135deg,var(--clay-dark),var(--clay))}
+
+#pdf-report{display:none;width:210mm;min-height:297mm;background:#fff;color:#1A2820;font-family:'Mukta','Noto Sans Devanagari',sans-serif;padding:16mm;line-height:1.5}
+#pdf-report .pdf-head{text-align:center;border-bottom:3px double #15402D;padding-bottom:16px;margin-bottom:20px}
+#pdf-report .pdf-head h1{font-family:'Tiro Devanagari Hindi',serif;font-size:22px;color:#15402D;margin-bottom:4px}
+#pdf-report .pdf-head .sub{font-size:11px;color:#4A5A4D;letter-spacing:.08em}
+#pdf-report .pdf-head .date{font-size:10px;color:#7A877B;margin-top:6px}
+#pdf-report .pdf-section{margin-bottom:16px;page-break-inside:avoid}
+#pdf-report .pdf-section h2{font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:#15402D;border-bottom:1px solid #D4CCB8;padding-bottom:5px;margin-bottom:10px}
+#pdf-report table{width:100%;border-collapse:collapse;font-size:11px}
+#pdf-report table td{padding:6px 8px;border-bottom:1px solid #EAE3D2;vertical-align:top}
+#pdf-report table td:first-child{color:#4A5A4D;width:40%}
+#pdf-report table td:last-child{font-weight:600;color:#1A2820}
+#pdf-report .pdf-note{font-size:9px;color:#7A877B;background:#FDF4E3;padding:8px 10px;border-left:3px solid #DB8C1E;border-radius:4px;margin-top:10px;line-height:1.5}
+#pdf-report .pdf-footer{text-align:center;font-size:9px;color:#7A877B;margin-top:24px;padding-top:14px;border-top:1px solid #EAE3D2}
+
+@media print{
+@page{size:A4;margin:0}
+body{background:#fff!important}
+body>*:not(#pdf-report){display:none!important}
+#pdf-report{display:block!important;position:static!important;z-index:auto!important}
+}
+
+footer.app-footer{text-align:center;padding:36px 24px 60px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line-soft);margin-top:24px}
+footer.app-footer .badge-sih{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--forest),var(--forest-light));color:#fff;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.06em;margin-bottom:12px}
+footer.app-footer .code-ninjas{font-family:'Fraunces',serif;font-weight:700;color:var(--ochre-dark);font-size:1rem;letter-spacing:.02em;display:block;margin-top:6px}
+
+@media(max-width:720px){
+.wrap,.header-inner{padding-left:16px;padding-right:16px}
+.section{padding:24px 20px}
+.grid-2{grid-template-columns:1fr;gap:0}
+.fin-grid{grid-template-columns:1fr}
+.progress-step span:not(.num){display:none}
+.report-header{padding:26px 22px}
+.report-actions{flex-direction:column}
+.report-actions .btn{width:100%;justify-content:center}
+.lang-btn{padding:6px 10px;font-size:.75rem}
+.hero h1 em{display:block}
+.btn-lg{font-size:1rem;padding:15px 20px}
+.bg-icons .ic{font-size:50px;opacity:.03}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-scenes" aria-hidden="true">
+<div class="bg-scene"></div><div class="bg-scene"></div><div class="bg-scene"></div><div class="bg-scene"></div>
+</div>
+<div class="bg-icons" aria-hidden="true">
+<span class="ic">🌾</span><span class="ic">🐄</span><span class="ic">🚜</span><span class="ic">🏛️</span>
+<span class="ic">🌱</span><span class="ic">🛒</span><span class="ic">💼</span>
+</div>
+
+<div class="page-shell">
+<header>
+<div class="header-inner">
+<div class="brand">
+<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="lg1" x1="0" y1="0" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+<stop offset="0%" stop-color="#15402D"/><stop offset="100%" stop-color="#3E8F65"/>
+</linearGradient>
+<linearGradient id="lg2" x1="0" y1="0" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+<stop offset="0%" stop-color="#DB8C1E"/><stop offset="100%" stop-color="#F5CC8A"/>
+</linearGradient>
+<radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0%" stop-color="#F5CC8A"/><stop offset="100%" stop-color="#DB8C1E"/>
+</radialGradient>
+</defs>
+<rect width="46" height="46" rx="13" fill="url(#lg1)"/>
+<circle cx="34" cy="12" r="4.5" fill="url(#sun)" opacity="0.9"/>
+<path d="M8 36 L14 30 L20 34 L28 22 L36 28" stroke="#F5CC8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9"/>
+<path d="M23 40V20" stroke="#F5CC8A" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M23 28c0-2.5 2.5-5 5-5v5c0 2.5-2.5 5-5 5" fill="url(#lg2)" opacity="0.95"/>
+<path d="M23 28c0-2.5-2.5-5-5-5v5c0 2.5 2.5 5 5 5" fill="#A8D5B8" opacity="0.95"/>
+<path d="M23 21c0-2.5 2.5-5 5-5v5c0 2.5-2.5 5-5 5" fill="url(#lg2)" opacity="0.7"/>
+<path d="M23 21c0-2.5-2.5-5-5-5v5c0 2.5 2.5 5 5 5" fill="#A8D5B8" opacity="0.7"/>
+</svg>
+<div class="brand-text">
+<span class="brand-title" data-i18n="brandName">ग्राम सलाहकार</span>
+<span class="brand-sub">SIH 2026 <span class="cn-badge">CODE NINJAS</span></span>
+</div>
+</div>
+<div class="lang-group">
+<button class="lang-btn active" data-lang="hi" onclick="setLang('hi')">हिंदी</button>
+<button class="lang-btn" data-lang="en" onclick="setLang('en')">English</button>
+<button class="lang-btn" data-lang="mr" onclick="setLang('mr')">मराठी</button>
+</div>
+</div>
+</header>
+
+<main class="wrap">
+
+<section class="hero" id="hero">
+<div class="hero-badge"><span class="dot"></span><span data-i18n="heroBadge">हाइपरलोकल बिज़नेस सलाहकार · वॉइस सपोर्ट · 3 भाषाएं</span></div>
+<h1><span data-i18n="heroTitle1">अपना व्यापार,</span><br><em data-i18n="heroTitle2">अपनी ज़मीन पर।</em></h1>
+<p class="hero-lead" data-i18n="heroLead">बोलकर बताएं — अपना गांव, तालुका, पूंजी और व्यापार। हम आपको लोन, योजनाएं, मुनाफे और स्थानीय बाज़ार की पूरी रिपोर्ट देंगे।</p>
+<div class="hero-actions">
+<button class="btn btn-primary" onclick="scrollToForm()"><span data-i18n="heroCta">शुरू करें</span><span>→</span></button>
+<button class="btn btn-ghost" onclick="demoFill()" data-i18n="demoBtn">डेमो भरें</button>
+</div>
+<div class="hero-features">
+<div class="feature"><div class="feature-icon">🎤</div><h4 data-i18n="feat1Title">बोलकर बताएं</h4><p data-i18n="feat1Desc">हर फ़ील्ड में माइक है।</p></div>
+<div class="feature"><div class="feature-icon">📊</div><h4 data-i18n="feat3Title">स्मार्ट चार्ट</h4><p data-i18n="feat3Desc">Pie, Bar, Radar, Gauge।</p></div>
+<div class="feature"><div class="feature-icon">💡</div><h4 data-i18n="feat5Title">व्यापार सुझाव</h4><p data-i18n="feat5Desc">हर व्यापार का मुनाफा और ROI।</p></div>
+<div class="feature"><div class="feature-icon">📄</div><h4 data-i18n="feat4Title">PDF रिपोर्ट</h4><p data-i18n="feat4Desc">हिंदी + English में।</p></div>
+</div>
+</section>
+
+<div class="progress-track" id="progressTrack">
+<div class="progress-step active"><span class="num">1</span><span data-i18n="step1Label">व्यक्तिगत</span></div>
+<div class="progress-line"></div>
+<div class="progress-step"><span class="num">2</span><span data-i18n="step2Label">स्थान</span></div>
+<div class="progress-line"></div>
+<div class="progress-step"><span class="num">3</span><span data-i18n="step3Label">व्यापार</span></div>
+<div class="progress-line"></div>
+<div class="progress-step"><span class="num">4</span><span data-i18n="step4Label">वित्त</span></div>
+</div>
+
+<div id="form-sections">
+<div class="field-error-summary" id="errorSummary">
+<strong id="errorSummaryTitle">कृपया नीचे दी गई जानकारी भरें:</strong>
+<ul id="errorList"></ul>
+</div>
+
+<section class="section">
+<div class="section-head"><div class="section-icon">👤</div><h2 data-i18n="s1Title">आपके बारे में</h2><span class="step-tag" data-i18n="s1Tag">चरण 1</span></div>
+<div class="grid-2">
+<div class="field" id="field-name">
+<label><span data-i18n="labelName">आपका नाम</span> <span class="req">*</span></label>
+<div class="input-row">
+<input type="text" id="inputName" data-i18n-placeholder="phName" placeholder="जैसे: रामलाल पाटील">
+<button class="mic-btn" data-mic-for="inputName">🎤</button>
+</div>
+<div class="error-msg" data-i18n="errName">कृपया नाम भरें</div>
+</div>
+<div class="field">
+<label data-i18n="labelGender">लिंग</label>
+<div class="input-row">
+<select id="inputGender">
+<option value="male" data-i18n="gMale">पुरुष</option>
+<option value="female" data-i18n="gFemale">महिला</option>
+<option value="other" data-i18n="gOther">अन्य</option>
+</select>
+</div>
+</div>
+</div>
+<div class="grid-2">
+<div class="field">
+<label data-i18n="labelFamily">परिवार के सदस्य</label>
+<div class="input-row">
+<select id="inputFamily">
+<option value="1">1–2</option><option value="3" selected>3–4</option>
+<option value="5">5–6</option><option value="7">7+</option>
+</select>
+</div>
+</div>
+<div class="field">
+<label data-i18n="labelCaste">वर्ग श्रेणी</label>
+<div class="input-row">
+<select id="inputCaste">
+<option value="general" data-i18n="catGen">सामान्य</option>
+<option value="obc" selected data-i18n="catObc">OBC</option>
+<option value="sc" data-i18n="catSc">SC</option>
+<option value="st" data-i18n="catSt">ST</option>
+<option value="minority" data-i18n="catMin">अल्पसंख्यक</option>
+<option value="women" data-i18n="catWomen">महिला उद्यमी</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-icon">📍</div><h2 data-i18n="s2Title">आपका स्थान</h2><span class="step-tag" data-i18n="s2Tag">चरण 2</span></div>
+<div class="grid-2">
+<div class="field">
+<label data-i18n="labelState">राज्य</label>
+<div class="input-row">
+<select id="inputState" disabled style="background:var(--bg-warm);cursor:not-allowed;opacity:.85">
+<option value="Maharashtra" selected>Maharashtra</option>
+</select>
+</div>
+</div>
+<div class="field" id="field-district">
+<label><span data-i18n="labelDistrict">जिला</span> <span class="req">*</span></label>
+<div class="input-row">
+<select id="inputDistrict" onchange="onDistrictChange()">
+<option value="" data-i18n="selectDistrict">— जिला चुनें —</option>
+</select>
+</div>
+<div class="error-msg" data-i18n="errDistrict">कृपया जिला चुनें</div>
+</div>
+</div>
+<div class="grid-2">
+<div class="field">
+<label data-i18n="labelTaluka">तालुका / ब्लॉक</label>
+<div class="input-row">
+<select id="inputTaluka" onchange="onTalukaChange()">
+<option value="" data-i18n="selectTaluka">— पहले जिला चुनें —</option>
+</select>
+</div>
+</div>
+<div class="field" id="field-village">
+<label><span data-i18n="labelVillage">गांव</span> <span class="req">*</span></label>
+<div class="input-row">
+<select id="inputVillage">
+<option value="" data-i18n="selectVillage">— पहले तालुका चुनें —</option>
+</select>
+</div>
+<input type="text" id="inputVillageManual" data-i18n-placeholder="phVillageManual" placeholder="या गांव का नाम लिखें" style="margin-top:8px;padding:11px 14px;border:1.5px dashed var(--line);border-radius:10px;background:var(--panel-2);width:100%;font-size:.92rem">
+<div class="error-msg" data-i18n="errVillage">कृपया गांव चुनें या लिखें</div>
+</div>
+</div>
+<div class="field">
+<label data-i18n="labelPincode">पिनकोड</label>
+<div class="input-row">
+<input type="text" id="inputPincode" maxlength="6" data-i18n-placeholder="phPincode" placeholder="जैसे: 412207">
+<button class="mic-btn" data-mic-for="inputPincode">🎤</button>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-icon">💼</div><h2 data-i18n="s3Title">व्यापार का चुनाव</h2><span class="step-tag" data-i18n="s3Tag">चरण 3</span></div>
+<div class="field" id="field-category">
+<label><span data-i18n="labelCategory">व्यापार श्रेणी</span> <span class="req">*</span></label>
+<div class="chip-row" id="categoryChips">
+<button class="chip" data-value="dairy" onclick="selectCategory(this)"><span>🐄</span><span data-i18n="catDairy">डेयरी</span></button>
+<button class="chip" data-value="grocery" onclick="selectCategory(this)"><span>🛒</span><span data-i18n="catGrocery">किराना</span></button>
+<button class="chip" data-value="agri" onclick="selectCategory(this)"><span>🌾</span><span data-i18n="catAgri">कृषि प्रसंस्करण</span></button>
+<button class="chip" data-value="textile" onclick="selectCategory(this)"><span>🧵</span><span data-i18n="catTextile">कपड़ा / टेलरिंग</span></button>
+<button class="chip" data-value="repair" onclick="selectCategory(this)"><span>🔧</span><span data-i18n="catRepair">रिपेयर / सर्विस</span></button>
+<button class="chip" data-value="digital" onclick="selectCategory(this)"><span>💻</span><span data-i18n="catDigital">डिजिटल सेवा</span></button>
+<button class="chip" data-value="craft" onclick="selectCategory(this)"><span>🧺</span><span data-i18n="catCraft">हस्तशिल्प</span></button>
+<button class="chip" data-value="other" onclick="selectCategory(this)"><span>✏️</span><span data-i18n="catOther">अन्य</span></button>
+</div>
+<div class="error-msg" data-i18n="errCategory">कृपया व्यापार श्रेणी चुनें</div>
+</div>
+<div class="field" id="subBusinessField" style="display:none">
+<label data-i18n="labelSubBusiness">उप-व्यापार</label>
+<div class="input-row"><select id="inputSubBusiness"></select></div>
+</div>
+<div class="grid-2">
+<div class="field">
+<label data-i18n="labelExperience">इस क्षेत्र का अनुभव</label>
+<div class="input-row">
+<select id="inputExperience">
+<option value="0" data-i18n="exp0">कोई अनुभव नहीं</option>
+<option value="1" selected data-i18n="exp1">1–2 साल</option>
+<option value="3" data-i18n="exp2">3–5 साल</option>
+<option value="6" data-i18n="exp3">5+ साल</option>
+</select>
+</div>
+</div>
+<div class="field">
+<label data-i18n="labelExisting">पहले से कोई व्यापार है?</label>
+<div class="input-row">
+<select id="inputExisting">
+<option value="no" data-i18n="exNo">नहीं, नया</option>
+<option value="yes-expand" data-i18n="exYesExp">हां, विस्तार</option>
+<option value="yes-new" data-i18n="exYesNew">हां, नया भी</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><div class="section-icon">💰</div><h2 data-i18n="s4Title">पूंजी व वित्त</h2><span class="step-tag" data-i18n="s4Tag">चरण 4</span></div>
+<div class="field" id="field-capital">
+<label><span data-i18n="labelCapital">आपके पास उपलब्ध पूंजी (₹)</span> <span class="req">*</span></label>
+<div class="chip-row" id="capitalChips">
+<button class="chip" data-value="25000" onclick="selectCapital(this)" data-i18n="cap25k">₹25 हज़ार</button>
+<button class="chip" data-value="50000" onclick="selectCapital(this)" data-i18n="cap50k">₹50 हज़ार</button>
+<button class="chip" data-value="100000" onclick="selectCapital(this)" data-i18n="cap1L">₹1 लाख</button>
+<button class="chip" data-value="200000" onclick="selectCapital(this)" data-i18n="cap2L">₹2 लाख</button>
+<button class="chip" data-value="500000" onclick="selectCapital(this)" data-i18n="cap5L">₹5 लाख</button>
+<button class="chip" data-value="1000000" onclick="selectCapital(this)" data-i18n="cap10L">₹10 लाख</button>
+</div>
+<div class="custom-input-row">
+<span class="sep" data-i18n="orType">या सटीक रकम:</span>
+<input type="number" id="inputCapital" data-i18n-placeholder="phCapital" placeholder="₹ में लिखें" oninput="clearCapitalChips()">
+</div>
+<div class="error-msg" data-i18n="errCapital">कृपया पूंजी भरें</div>
+</div>
+<div class="grid-2">
+<div class="field">
+<label data-i18n="labelLand">अपनी ज़मीन है?</label>
+<div class="input-row">
+<select id="inputLand">
+<option value="yes" data-i18n="landYes">हां, है</option>
+<option value="no" data-i18n="landNo">नहीं</option>
+<option value="rent" data-i18n="landRent">किराए पर</option>
+</select>
+</div>
+</div>
+<div class="field">
+<label data-i18n="labelBpl">BPL / Antyodaya परिवार?</label>
+<div class="input-row">
+<select id="inputBpl">
+<option value="no" data-i18n="bplNo">नहीं</option>
+<option value="yes" data-i18n="bplYes">हां</option>
+</select>
+</div>
+</div>
+</div>
+<button class="btn btn-primary btn-lg" onclick="generateReport()">
+<span>✨</span><span data-i18n="submitBtn">मेरी रिपोर्ट बनाएं</span>
+</button>
+</section>
+</div>
+
+<section id="results">
+<div class="report-header">
+<div class="label" data-i18n="reportLabel">आपकी व्यापार रिपोर्ट</div>
+<h2 id="reportTitle">—</h2>
+<div class="meta">
+<span>📍 <span id="reportLocation">—</span></span>
+<span>💼 <span id="reportBusiness">—</span></span>
+<span>💰 <span id="reportCapital">—</span></span>
+</div>
+<div class="report-actions">
+<button class="btn btn-white" id="speakBtn" onclick="speakReport()">🔊 <span data-i18n="btnListen">सुनें</span></button>
+<button class="btn btn-ochre" onclick="downloadPDF()">📄 <span data-i18n="btnDownload">PDF डाउनलोड</span></button>
+<button class="btn btn-white" onclick="restartForm()">🔄 <span data-i18n="btnRestart">नई रिपोर्ट</span></button>
+</div>
+<div class="report-lang-row">
+<div class="report-lang">
+<label>📄 PDF:</label>
+<select id="pdfLangSelect" onchange="changePdfLang(this.value)">
+<option value="hi">हिंदी</option>
+<option value="en" selected>English + हिंदी</option>
+<option value="mr">मराठी</option>
+</select>
+</div>
+<div class="report-lang">
+<label>🔊 <span data-i18n="voiceLang">आवाज़</span>:</label>
+<select id="voiceLangSelect" onchange="changeVoiceLang(this.value)">
+<option value="hi">हिंदी</option>
+<option value="en">English</option>
+<option value="mr">मराठी</option>
+</select>
+</div>
+</div>
+</div>
+<div id="resultsContent"></div>
+<div class="disclaimer">
+<strong data-i18n="disclaimerStrong">महत्वपूर्ण सूचना:</strong>
+<span data-i18n="disclaimerText">यह रिपोर्ट उपलब्ध सरकारी आंकड़ों पर आधारित अनुमानित विश्लेषण है। वास्तविक जानकारी के लिए नज़दीकी बैंक, DIC या KVIC कार्यालय से संपर्क करें।</span>
+</div>
+</section>
+
+</main>
+
+<footer class="app-footer">
+<div class="badge-sih">🏆 SIH 2026 PROJECT</div>
+<div data-i18n="footer">ग्राम सलाहकार · हाइपरलोकल बिज़नेस एडवाइज़र</div>
+<div style="font-size:.78rem;opacity:.75;margin-top:4px" data-i18n="footerSub">ग्रामीण उद्यमियों के लिए</div>
+<span class="code-ninjas">⚡ Built by CODE NINJAS</span>
+<div style="font-size:.72rem;opacity:.6;margin-top:10px;letter-spacing:.03em">
+© 2026 Code Ninjas · All Rights Reserved
+</div>
+</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="pdf-report"></div>
+
+<script>
+/* ========================================================
+   DATA
+   ======================================================== */
+var MH_DATA={
+"Nagpur":{talukas:{
+"Narkhed":["Khargad","Ambada","Saiwada","Thadipavni","Khedi Kh","Kharbadi","Mahendri","Nandni","Jalalkheda","Madna","Thugaon (Deo)","Mohgaon","Dindargaon","Bopapur","Narsingi"],
+"Katol":["Mukani","Rajni","Khamli","Sonoli","Gollarkhapa","Tapani","Jatamzari","Gondimohgaon","Zilpa","Bori","Mendki","Gondidigras","Masli","Kalambha","Yenwa"],
+"Kalameshwar":["Tidangi","Telgaon","Nandi Kheda","Tishti kh.","Tishti bk.","Lohagad","Budhla","Pilkapar","Mandvi","Sonoli","Parsodi wakil","Panuabali","Khumari","Mhasepathar"],
+"Savner":["Khursapar","Sawali","Jatamkhora","Kawatha","Khairi (Dhalgaon)","Hattisarra","Kelwad","Raibasa","Jalalkheda","Chhatrapur","Jaitpur","Joga","Malegaon"],
+"Ramtek":["Khursapar","Garra","Manegaon Tek","Karwahi","Dulara","Lodha","Pindkapar","Nawegaon(kh)","Bandra","Sawara","Deolapar","Zinzariya","Ghoti"],
+"Parseoni":["Ghatkukada","Ghatpendhari","Kolitmara","Kirangi Sarra","Surera","Mehakepar","Narhar","Banera","Dhawalapur","Sawangi","Saleghat","Ambazari"],
+"Nagpur (Rural)":["Bandhara","Sirpur","Bhuyari","Khairi","Bajargaon","Shiwa","Sawanga","Wanjara","Pachanvari","Satnavari","Linga","Pethkaldongari","Vyahad"],
+"Kamptee":["Tandulwani","Babulkheda","Chicholi","Khapa","Gumthi","Lonkhairi","Nanda","Khaparkheda","Panjara","Suradevi","Bina","Waregaon","Kawtha"],
+"Hingna":["Khairi","Devali (Kalbande)","Digdoh","Walani","Agargaon","Dabha","Nandera","Ambazari","Yerangaon","Khapa Nipani","Gidamgad","Adegaon","Kavdas"],
+"Umred":["Salaimendha","Pachgaon","Khapri Raja","Surgaon","Undari","Mangli","Kalandri","Khairi","Borgaon","Nirwa","Pipla","Wadegaon","Akola"],
+"Kuhi":["Pipari","Khalasana","Mohadi","Kuchadi","Titur","Bhamewada","Chanoda","Akoli","Malni","Mangli","Tarni","Chitapur","Dhanoli"],
+"Bhiwapur":["Mandwa","Indapur","Shionfal","Khandalzari","Botezari","Chargaon","Malewada","Polgaon","Pirawa","Besur","Nad","Chikhalapar","Salebhatti"],
+"Mauda":["Nandapuri","Nerla","Dudhala","Tuman","Tarodi","Aroli","Khaparkheda (Gadi Patil Teli)","Kharda","Rajoli","Pardi Kh","Pardikala","Nimkheda","Hingana"]
+}},
+"Pune":{talukas:{
+"Junnar":["Khireshwar","Kolhewadi","Kopare","Mandave","Muthalne","Alu","Mandarne","Pimpalgaon Joga","Bhoirwadi","Sanganore","Khubi","Karanjale","Taleran","Otur","Dingore"],
+"Ambegaon":["Ahupe","Pimpargane","Aghane","Don","Tirpad","Asane","Malin","Adivare","Borghar","Varasawane","Phulvade","Dimbhe Bk.","Koltavade","Jambhori","Kondhaval"],
+"Shirur":["Kathapur Kh.","Pimparkhed","Jambut","Saradwadi","Chandoh","Fakate","Vadner Kh.","Takali Haji","Kawathe","Savindane","Belhe","Malthan","Pabal","Kadus"],
+"Khed":["Bhorgiri","Bhivegaon","Karkudi","Mandoshi","Naiphad","Kharoshi","Awhat","Valad","Wada","Kahu","Sakurdi","Goregaon","Kalmodi","Dehane"],
+"Maval":["Sawale","Malegaon Bk.","Pimpari","Malegaon Kh.","Kune Ansute","Inglun","Kivale","Kashal","Bhoyare","Kalhat","Nigade","Ambale","Umbare Navalakh","Induri"],
+"Mulshi":["Devghar","Visakhar","Peth Shahapur","Ambavane","Kolawali","Pomgaon","Shirvali","Nandivali","Shedani","Bhambarde","Ekole","Ghutake","Adgaon","Pimpri"],
+"Haveli":["Malinagar","Vitthal Nagar","Nirgudi","Wadgaon-shinde","Manjari Kh.","Tulapur","Fulgaon","Wadhu Kh.","Perane","Dongargaon","Burkegaon","Pimpri Sandas","Loni-kand","Kesnand"],
+"Pune City":["Shivajinagar","Kothrud","Aundh","Baner","Wakad"],
+"Pimpri-Chinchwad":["Pimpri","Chinchwad","Akurdi","Nigdi","Bhosari"],
+"Baramati":["Vadhane","Dandwadi","Naroli","Kololi","Supe","Kutwalwadi","Morgaon","Karhati","Deulgaon Rasal","Jalgaon Supe","Shirsuphal","Parwadi","Malegaon Bk.","Sangavi"],
+"Indapur":["Shetphalgadhe","Pimpale","Madanwadi","Takrarwadi","Bhigvan","Dikasal","Kumbhargaon","Lasurne","Nirgude","Kalamb","Bawada","Sansar","Bori","Kalashi"],
+"Daund":["Patethan","Takali","Panwali","Vadgaon Bande","Koregaon Bhiwar","Telewadi","Pilanwadi","Devkarwadi","Rahu","Pimpalgaon","Valki","Delvadi","Warwand","Patas"],
+"Purandhar":["Askarwadi","Patharwadi","Bhivari","Bopgaon","Chambali","Jadhavwadi","Zendewadi","Kalewadi","Sonori","Vanpuri","Dive","Hivare","Garade","Jejuri Rural"],
+"Bhor":["Sasewadi","Shindewadi","Velu","Kasurdi (Khedebare)","Ranje","Kusagaon","Khopi","Shivare","Varve Kh.","Kambare","Varve Bk.","Kanjale","Parwadi","Kelawade"],
+"Velhe":["Dapsare","Kurtavadi","Gondekhal","Ghodkhal","Kasedi","Chikhali Kh.","Balvadi","Koshimghar","Kambegi","Gholapghar","Ambegaon Kh.","Kuravati","Mose Bk","Saiv Bk.","Panshet"]
+}},
+"Latur":{talukas:{
+"Latur":["Pimpalgaon Amba","Bhosa","Wadi Wagholi","Nilkanth","Wagholi","Shirala","Khuntephal","Matephal","Murud Bk.","Gumphawadi","Karkatta","Khandala","Hisori","Borgaon Bk.","Niwali","Ekurga","Chata","Bhoyara"],
+"Renapur":["Chatgaon","Morwad","Lakhamapur","Palsi","Bhokaramba","Motegaon","Wangdari","Dighol Deshmukh","Dighol Deshpande","Sevalalnagar","Itti","Khanapur","Dawangaon","Kumbhari","Pohregaon","Andalgaon","Sangvi","Sindhgaon","Niwada"],
+"Ahmadpur":["Devkara","Hingangaon","Molwan","Kolwadi","Gudalewadi","Yeldarwadi","Narwatwadi","Andhori.","Chikhali","Kingaon","Dagadwadi","Mohgaon","Gunjoti","Khanapur (Mohgaon)","Kopra","Kendrewadi","Sonkhed","Vilegaon"],
+"Jalkot":["Sheldara","Sorga","Wadgaon","Hokarna","Umardara","Kekat Sindgi","Wanjarwada","Chera","Umarga Retu","Jagalpur Bk.","Domgaon","Dhamangaon","Jirga","Hawarga","Yeldara","Dhorsangvi","Viral","Kunki","Jalkot"],
+"Chakur":["Rajewadi","Raiwadi","Kendrewadi","Mahalungi","Hadoli","Jathala","Belgaon","Zari Bk","Zari Kh.","Ramwadi","Janwal","Bramhawadi","Wagholi","Hali Kh","Kadmuli","Wadwal Nagnath","Dapkyal","Shiwani Majra"],
+"Shirur-Anantpal":["Sawargaon","Hippalgaon","Shivpur","Dhamangaon","Karewadi","Bolegaon Bk.","Chamarga","Yerol","Dighol","Sumthana","Daithana","Shend (Daithana)","Kanegaon","Tipral","Sakol","Pandharwadi","Nagewadi"],
+"Ausa":["Bheta","Naholi","Kawtha Kej","Kalmata","Uti Bk.","Lakhangaon","Satdharwadi","Haldurg","Barhanpur","Bhada","Borgaon","Wadji","Andora","Jayphal","Shivli","Warwada","Yeloriwadi","Korangala"],
+"Nilanga":["Dhobalewadi","Macharatwadi","Dangewadi","Jau","Nanand","Anandwadi","Dagadwadi","Chincholi (pan)","Gaur","Anandwadi (gaur)","Tupdi","Sonesangvi","Masalga","Jotwadi","Mugaon","Shend","Tajpur","Hanmantwadi"],
+"Udgir":["Dhotarwadi","Kumdhal (her)","Arasnal","Kiniyalladevi","Umarga Manna","Anapwadi","Honihipparga","Kshetrafal","Hangarga Kudar","Ismalpur","Tondar","Kumtha Kh.","Her","Boyachiwadi","Karadkhed","Waigaon","Chimachiwadi","Mortalwadi"],
+"Deoni":["Mamdapur","Gurdhal (her)","Kamaroddinpur","Talegaon (bhogeshwar)","Nagtirthawadi","Chawan Hipparga","Sayyadpur","Kawathala","Darewadi","Walandi","Ismailwadi","Dhangarwadi","Jawalga","Wagnalwadi","Hisamnagar","Helamb","Anantwadi","Bombali Bk."]
+}}
+};
+
+var BUSINESS_CATALOG={
+dairy:[{n:'Milk Collection Centre',hi:'दूध संकलन केंद्र',mr:'दूध संकलन केंद्र',en:'Milk Collection Centre',icon:'🥛',cost:150000,rev:45000,profit:12000,roi:96},
+{n:'Paneer & Curd Unit',hi:'पनीर व दही इकाई',mr:'पनीर व दही युनिट',en:'Paneer & Curd Unit',icon:'🧈',cost:250000,rev:80000,profit:22000,roi:105},
+{n:'Cattle Feed Shop',hi:'पशु आहार दुकान',mr:'पशुखाद्य दुकान',en:'Cattle Feed Shop',icon:'🌾',cost:100000,rev:60000,profit:10000,roi:120},
+{n:'Mobile Dairy Vending',hi:'मोबाइल डेयरी विक्रय',mr:'मोबाइल डेअरी विक्री',en:'Mobile Dairy Vending',icon:'🚐',cost:80000,rev:40000,profit:9000,roi:135}],
+grocery:[{n:'Kirana / General Store',hi:'किराना / जनरल स्टोर',mr:'किराणा / जनरल स्टोअर',en:'Kirana / General Store',icon:'🛒',cost:100000,rev:70000,profit:10000,roi:120},
+{n:'Agri Input Shop',hi:'कृषि इनपुट दुकान',mr:'कृषी इनपुट दुकान',en:'Agri Input Shop',icon:'🌱',cost:180000,rev:110000,profit:18000,roi:120},
+{n:'Mini Supermarket',hi:'मिनी सुपरमार्केट',mr:'मिनी सुपरमार्केट',en:'Mini Supermarket',icon:'🏪',cost:400000,rev:220000,profit:35000,roi:105},
+{n:'Local Trading Business',hi:'स्थानिक ट्रेडिंग',mr:'स्थानिक ट्रेडिंग',en:'Local Trading Business',icon:'📦',cost:150000,rev:120000,profit:15000,roi:120}],
+agri:[{n:'Flour Mill',hi:'आटा चक्की',mr:'पीठ गिरणी',en:'Flour Mill',icon:'🌾',cost:200000,rev:75000,profit:16000,roi:96},
+{n:'Dal Processing Unit',hi:'दाल प्रसंस्करण',mr:'डाळ प्रक्रिया',en:'Dal Processing Unit',icon:'🥘',cost:350000,rev:120000,profit:28000,roi:96},
+{n:'Oil Extraction Unit',hi:'तेल निकालने की इकाई',mr:'तेल गाळणी',en:'Oil Extraction Unit',icon:'🫒',cost:400000,rev:140000,profit:32000,roi:96},
+{n:'Food Processing',hi:'खाद्य प्रसंस्करण',mr:'अन्न प्रक्रिया',en:'Food Processing',icon:'🍲',cost:500000,rev:180000,profit:40000,roi:96}],
+textile:[{n:'Tailoring Unit',hi:'सिलाई इकाई',mr:'शिवणकाम युनिट',en:'Tailoring Unit',icon:'✂️',cost:80000,rev:40000,profit:10000,roi:150},
+{n:'Boutique / Readymade',hi:'बुटीक / रेडीमेड',mr:'बुटीक / रेडीमेड',en:'Boutique / Readymade',icon:'👗',cost:250000,rev:110000,profit:22000,roi:105},
+{n:'Handloom Weaving',hi:'हैंडलूम बुनाई',mr:'हातमाग विणकाम',en:'Handloom Weaving',icon:'🧵',cost:200000,rev:80000,profit:18000,roi:108},
+{n:'Embroidery Unit',hi:'कढ़ाई इकाई',mr:'भरतकाम युनिट',en:'Embroidery Unit',icon:'🪡',cost:120000,rev:55000,profit:13000,roi:130}],
+repair:[{n:'Mobile Repair Shop',hi:'मोबाइल रिपेयर',mr:'मोबाइल दुरुस्ती',en:'Mobile Repair Shop',icon:'📱',cost:60000,rev:35000,profit:12000,roi:240},
+{n:'Electrical Repair',hi:'इलेक्ट्रिकल रिपेयर',mr:'इलेक्ट्रिकल दुरुस्ती',en:'Electrical Repair',icon:'⚡',cost:80000,rev:45000,profit:14000,roi:210},
+{n:'Two-Wheeler Repair',hi:'दोपहिया रिपेयर',mr:'दुचाकी दुरुस्ती',en:'Two-Wheeler Repair',icon:'🏍️',cost:100000,rev:55000,profit:16000,roi:192},
+{n:'Welding Workshop',hi:'वेल्डिंग वर्कशॉप',mr:'वेल्डिंग कार्यशाळा',en:'Welding Workshop',icon:'🔧',cost:120000,rev:60000,profit:17000,roi:170}],
+digital:[{n:'Digital Service Centre',hi:'डिजिटल सेवा केंद्र',mr:'डिजिटल सेवा केंद्र',en:'Digital Service Centre',icon:'💻',cost:80000,rev:50000,profit:15000,roi:225},
+{n:'Printing / Photocopy',hi:'प्रिंटिंग / झेरॉक्स',mr:'प्रिंटिंग / झेरॉक्स',en:'Printing / Photocopy',icon:'🖨️',cost:70000,rev:38000,profit:11000,roi:188},
+{n:'CSC + Banking Point',hi:'CSC + बैंकिंग',mr:'CSC + बँकिंग',en:'CSC + Banking Point',icon:'🏧',cost:90000,rev:60000,profit:18000,roi:240},
+{n:'Mobile Recharge & Bill',hi:'मोबाइल रिचार्ज व बिल',mr:'मोबाइल रिचार्ज व बिल',en:'Mobile Recharge & Bill',icon:'📞',cost:40000,rev:28000,profit:8000,roi:240}],
+craft:[{n:'Handicraft Production',hi:'हस्तशिल्प निर्माण',mr:'हस्तकला निर्मिती',en:'Handicraft Production',icon:'🧺',cost:100000,rev:45000,profit:12000,roi:144},
+{n:'Bamboo Products',hi:'बांस उत्पाद',mr:'बांबू उत्पादने',en:'Bamboo Products',icon:'🎋',cost:80000,rev:35000,profit:10000,roi:150},
+{n:'Pottery / Clay',hi:'मिट्टी के बर्तन',mr:'मातीची भांडी',en:'Pottery / Clay',icon:'🏺',cost:60000,rev:28000,profit:8500,roi:170},
+{n:'Handicraft Retail',hi:'हस्तशिल्प रिटेल',mr:'हस्तकला रिटेल',en:'Handicraft Retail',icon:'🎁',cost:150000,rev:70000,profit:15000,roi:120}],
+other:[{n:'Small Retail Outlet',hi:'छोटा रिटेल आउटलेट',mr:'छोटा रिटेल आउटलेट',en:'Small Retail Outlet',icon:'🏬',cost:100000,rev:60000,profit:12000,roi:144},
+{n:'Service Business',hi:'सेवा व्यापार',mr:'सेवा व्यवसाय',en:'Service Business',icon:'🛠️',cost:80000,rev:50000,profit:13000,roi:195},
+{n:'Local Manufacturing',hi:'स्थानीय निर्माण',mr:'स्थानिक निर्मिती',en:'Local Manufacturing',icon:'🏭',cost:200000,rev:95000,profit:20000,roi:120},
+{n:'Trading Business',hi:'ट्रेडिंग व्यापार',mr:'ट्रेडिंग व्यवसाय',en:'Trading Business',icon:'📊',cost:150000,rev:100000,profit:15000,roi:120}]
+};
+
+var dict={
+hi:{brandName:"ग्राम सलाहकार",heroBadge:"हाइपरलोकल बिज़नेस सलाहकार · वॉइस सपोर्ट · 3 भाषाएं",
+heroTitle1:"अपना व्यापार,",heroTitle2:"अपनी ज़मीन पर।",
+heroLead:"बोलकर बताएं — अपना गांव, तालुका, पूंजी और व्यापार। हम आपको लोन, योजनाएं, मुनाफे और स्थानीय बाज़ार की पूरी रिपोर्ट देंगे।",
+heroCta:"शुरू करें",demoBtn:"डेमो भरें",
+feat1Title:"बोलकर बताएं",feat1Desc:"हर फ़ील्ड में माइक है।",
+feat2Title:"हाइपरलोकल",feat2Desc:"गांव, तालुका, पिनकोड।",
+feat3Title:"स्मार्ट चार्ट",feat3Desc:"Pie, Bar, Radar, Gauge।",
+feat4Title:"PDF रिपोर्ट",feat4Desc:"हिंदी + English में।",
+feat5Title:"व्यापार सुझाव",feat5Desc:"हर व्यापार का मुनाफा और ROI।",
+step1Label:"व्यक्तिगत",step2Label:"स्थान",step3Label:"व्यापार",step4Label:"वित्त",
+s1Title:"आपके बारे में",s1Tag:"चरण 1",s2Title:"आपका स्थान",s2Tag:"चरण 2",
+s3Title:"व्यापार का चुनाव",s3Tag:"चरण 3",s4Title:"पूंजी व वित्त",s4Tag:"चरण 4",
+labelName:"आपका नाम",phName:"जैसे: रामलाल पाटील",
+labelGender:"लिंग",gMale:"पुरुष",gFemale:"महिला",gOther:"अन्य",
+labelFamily:"परिवार के सदस्य",labelCaste:"वर्ग श्रेणी",
+catGen:"सामान्य",catObc:"OBC",catSc:"SC",catSt:"ST",catMin:"अल्पसंख्यक",catWomen:"महिला उद्यमी",
+labelState:"राज्य",labelDistrict:"जिला",labelTaluka:"तालुका / ब्लॉक",labelVillage:"गांव",labelPincode:"पिनकोड",
+selectDistrict:"— जिला चुनें —",selectTaluka:"— पहले तालुका चुनें —",selectVillage:"— गांव चुनें —",
+phVillageManual:"या गांव का नाम लिखें",phPincode:"जैसे: 412207",
+labelCategory:"व्यापार श्रेणी",
+catDairy:"डेयरी",catGrocery:"किराना",catAgri:"कृषि प्रसंस्करण",catTextile:"कपड़ा / टेलरिंग",catRepair:"रिपेयर / सर्विस",catDigital:"डिजिटल सेवा",catCraft:"हस्तशिल्प",catOther:"अन्य",
+labelSubBusiness:"उप-व्यापार",labelExperience:"इस क्षेत्र का अनुभव",
+exp0:"कोई अनुभव नहीं",exp1:"1–2 साल",exp2:"3–5 साल",exp3:"5+ साल",
+labelExisting:"पहले से कोई व्यापार है?",exNo:"नहीं, नया",exYesExp:"हां, विस्तार",exYesNew:"हां, नया भी",
+labelCapital:"आपके पास उपलब्ध पूंजी (₹)",orType:"या सटीक रकम:",phCapital:"₹ में लिखें",
+cap25k:"₹25 हज़ार",cap50k:"₹50 हज़ार",cap1L:"₹1 लाख",cap2L:"₹2 लाख",cap5L:"₹5 लाख",cap10L:"₹10 लाख",
+labelLand:"अपनी ज़मीन है?",landYes:"हां, है",landNo:"नहीं",landRent:"किराए पर",
+labelBpl:"BPL / Antyodaya परिवार?",bplYes:"हां",bplNo:"नहीं",
+submitBtn:"मेरी रिपोर्ट बनाएं",reportLabel:"आपकी व्यापार रिपोर्ट",
+btnListen:"सुनें",btnDownload:"PDF डाउनलोड",btnRestart:"नई रिपोर्ट",voiceLang:"आवाज़",
+disclaimerStrong:"महत्वपूर्ण सूचना:",
+disclaimerText:"यह रिपोर्ट उपलब्ध सरकारी आंकड़ों पर आधारित अनुमानित विश्लेषण है। वास्तविक जानकारी के लिए नज़दीकी बैंक, DIC या KVIC कार्यालय से संपर्क करें।",
+footer:"ग्राम सलाहकार · हाइपरलोकल बिज़नेस एडवाइज़र",footerSub:"ग्रामीण उद्यमियों के लिए",
+errName:"कृपया नाम भरें",errDistrict:"कृपया जिला चुनें",errVillage:"कृपया गांव चुनें या लिखें",
+errCategory:"कृपया व्यापार श्रेणी चुनें",errCapital:"कृपया पूंजी भरें",
+errSummaryTitle:"कृपया नीचे दी गई जानकारी भरें:",
+resFin:"वित्तीय योजना",resCharts:"विज़ुअल विश्लेषण",resSchemes:"सरकारी योजनाएं",resInsights:"स्थानीय विश्लेषण",resAction:"आगे की योजना",
+resBiz:"अनुशंसित व्यापार",resSuccess:"सफलता की संभावना",
+finProjectCost:"कुल परियोजना लागत",finLoan:"संभावित लोन",finOwnContrib:"आपका योगदान",
+finEmi:"अनुमानित मासिक EMI",finRate:"ब्याज दर",finTenure:"अवधि",finMoratorium:"मोहलत अवधि",
+finScheme:"अनुशंसित योजना",years:"वर्ष",months:"महीने",recommended:"अनुशंसित",topPick:"टॉप पिक",
+chartPie:"व्यापार मिश्रण",chartBar:"वित्तीय विभाजन",chartRadar:"क्षेत्रीय ताकत",chartLine:"5-वर्षीय प्रक्षेपण",
+bizStartup:"शुरुआत लागत",bizRevenue:"मासिक आय",bizProfit:"मासिक मुनाफा",bizROI:"ROI",
+bizMatch:"मैच स्कोर",bizWhy:"क्यों अनुशंसित",
+successTag:"अनुमानित (प्रॉक्सी)",
+successDesc:"यह संभावना अनुभव, पूंजी, क्षेत्रीय शक्ति और योजना-फिट पर आधारित अनुमान है। यह गारंटी नहीं है।",
+toastFill:"कृपया सभी ज़रूरी फ़ील्ड भरें।",toastVoiceUnsupported:"ब्राउज़र वॉइस सपोर्ट नहीं करता। Chrome इस्तेमाल करें।",
+toastListening:"सुन रहा हूँ…",toastPdfGenerating:"PDF तैयार हो रही है… प्रिंट डायलॉग में 'Save as PDF' चुनें",toastPdfDone:"PDF डाउनलोड हो गई!",
+toastDemoFilled:"डेमो डेटा भरा",reportOf:"रिपोर्ट तैयार"},
+en:{brandName:"Village Advisor",heroBadge:"Hyperlocal Business Advisor · Voice · 3 Languages",
+heroTitle1:"Your business,",heroTitle2:"on your own ground.",
+heroLead:"Speak or type — your village, taluka, capital and business. Get a full report on loans, schemes, profits and local market.",
+heroCta:"Get started",demoBtn:"Fill demo",
+feat1Title:"Speak it",feat1Desc:"Every field has a mic.",
+feat2Title:"Hyperlocal",feat2Desc:"Village, taluka, pincode.",
+feat3Title:"Smart charts",feat3Desc:"Pie, Bar, Radar, Gauge.",
+feat4Title:"PDF report",feat4Desc:"Hindi + English.",
+feat5Title:"Business advice",feat5Desc:"Profit & ROI for each business.",
+step1Label:"Personal",step2Label:"Location",step3Label:"Business",step4Label:"Finance",
+s1Title:"About you",s1Tag:"Step 1",s2Title:"Your location",s2Tag:"Step 2",
+s3Title:"Choose business",s3Tag:"Step 3",s4Title:"Capital & finance",s4Tag:"Step 4",
+labelName:"Your name",phName:"e.g. Ramlal Patil",
+labelGender:"Gender",gMale:"Male",gFemale:"Female",gOther:"Other",
+labelFamily:"Family members",labelCaste:"Category",
+catGen:"General",catObc:"OBC",catSc:"SC",catSt:"ST",catMin:"Minority",catWomen:"Woman entrepreneur",
+labelState:"State",labelDistrict:"District",labelTaluka:"Taluka / Block",labelVillage:"Village",labelPincode:"Pincode",
+selectDistrict:"— Select district —",selectTaluka:"— Select taluka first —",selectVillage:"— Select village —",
+phVillageManual:"Or type village name",phPincode:"e.g. 412207",
+labelCategory:"Business category",
+catDairy:"Dairy",catGrocery:"Grocery",catAgri:"Agri processing",catTextile:"Textile / tailoring",catRepair:"Repair / service",catDigital:"Digital services",catCraft:"Handicraft",catOther:"Other",
+labelSubBusiness:"Sub-business",labelExperience:"Experience",
+exp0:"No experience",exp1:"1–2 years",exp2:"3–5 years",exp3:"5+ years",
+labelExisting:"Already run a business?",exNo:"No, new",exYesExp:"Yes, expand",exYesNew:"Yes, also new",
+labelCapital:"Available capital (₹)",orType:"or exact amount:",phCapital:"Enter amount",
+cap25k:"₹25K",cap50k:"₹50K",cap1L:"₹1L",cap2L:"₹2L",cap5L:"₹5L",cap10L:"₹10L",
+labelLand:"Own land?",landYes:"Yes",landNo:"No",landRent:"Will rent",
+labelBpl:"BPL / Antyodaya family?",bplYes:"Yes",bplNo:"No",
+submitBtn:"Generate my report",reportLabel:"Your business report",
+btnListen:"Listen",btnDownload:"Download PDF",btnRestart:"New report",voiceLang:"Voice",
+disclaimerStrong:"Important:",
+disclaimerText:"This report is an estimated analysis based on available government data. For actual details, contact your nearest bank, DIC or KVIC office.",
+footer:"Village Advisor · Hyperlocal Business Advisor",footerSub:"Built for rural entrepreneurs",
+errName:"Please enter name",errDistrict:"Please select district",errVillage:"Please select or enter village",
+errCategory:"Please select business category",errCapital:"Please enter capital",
+errSummaryTitle:"Please fill in the following:",
+resFin:"Financial plan",resCharts:"Visual analysis",resSchemes:"Government schemes",resInsights:"Local analysis",resAction:"Action plan",
+resBiz:"Recommended Businesses",resSuccess:"Success Probability",
+finProjectCost:"Total project cost",finLoan:"Possible loan",finOwnContrib:"Your contribution",
+finEmi:"Estimated monthly EMI",finRate:"Interest rate",finTenure:"Tenure",finMoratorium:"Moratorium",
+finScheme:"Recommended scheme",years:"yrs",months:"months",recommended:"Recommended",topPick:"TOP PICK",
+chartPie:"Business mix",chartBar:"Financial breakdown",chartRadar:"Regional strengths",chartLine:"5-year projection",
+bizStartup:"Startup cost",bizRevenue:"Monthly revenue",bizProfit:"Monthly profit",bizROI:"ROI",
+bizMatch:"Match score",bizWhy:"Why recommended",
+successTag:"Proxy estimate",
+successDesc:"This probability is derived from experience, capital, regional strength and scheme fit. It is not a guarantee.",
+toastFill:"Please fill all required fields.",toastVoiceUnsupported:"Browser doesn't support voice. Use Chrome.",
+toastListening:"Listening…",toastPdfGenerating:"Preparing PDF… choose 'Save as PDF' in print dialog",toastPdfDone:"PDF downloaded!",
+toastDemoFilled:"Demo data filled",reportOf:"Report ready"},
+mr:{brandName:"ग्राम सल्लागार",heroBadge:"हायपरलोकल बिझनेस सल्लागार · व्हॉइस · ३ भाषा",
+heroTitle1:"तुमचा व्यवसाय,",heroTitle2:"तुमच्या जमिनीवर.",
+heroLead:"बोलून सांगा — तुमचं गाव, तालुका, भांडवल आणि व्यवसाय. संपूर्ण अहवाल मिळवा.",
+heroCta:"सुरू करा",demoBtn:"डेमो भरा",
+feat1Title:"बोलून सांगा",feat1Desc:"प्रत्येक फील्डमध्ये माइक.",
+feat2Title:"हायपरलोकल",feat2Desc:"गाव, तालुका, पिनकोड.",
+feat3Title:"स्मार्ट चार्ट",feat3Desc:"Pie, Bar, Radar, Gauge.",
+feat4Title:"PDF अहवाल",feat4Desc:"हिंदी + English.",
+feat5Title:"व्यवसाय सल्ला",feat5Desc:"प्रत्येक व्यवसायाचा नफा व ROI.",
+step1Label:"वैयक्तिक",step2Label:"ठिकाण",step3Label:"व्यवसाय",step4Label:"अर्थ",
+s1Title:"तुमच्याबद्दल",s1Tag:"टप्पा 1",s2Title:"तुमचं ठिकाण",s2Tag:"टप्पा 2",
+s3Title:"व्यवसाय निवडा",s3Tag:"टप्पा 3",s4Title:"भांडवल व अर्थ",s4Tag:"टप्पा 4",
+labelName:"तुमचं नाव",phName:"उदा: रामलाल पाटील",
+labelGender:"लिंग",gMale:"पुरुष",gFemale:"स्त्री",gOther:"इतर",
+labelFamily:"कुटुंबातील सदस्य",labelCaste:"वर्ग श्रेणी",
+catGen:"सर्वसाधारण",catObc:"OBC",catSc:"SC",catSt:"ST",catMin:"अल्पसंख्याक",catWomen:"महिला उद्योजक",
+labelState:"राज्य",labelDistrict:"जिल्हा",labelTaluka:"तालुका",labelVillage:"गाव",labelPincode:"पिनकोड",
+selectDistrict:"— जिल्हा निवडा —",selectTaluka:"— आधी तालुका निवडा —",selectVillage:"— गाव निवडा —",
+phVillageManual:"किंवा गावाचं नाव लिहा",phPincode:"उदा: 412207",
+labelCategory:"व्यवसाय श्रेणी",
+catDairy:"दुग्धव्यवसाय",catGrocery:"किराणा",catAgri:"कृषी प्रक्रिया",catTextile:"कापड / शिवणकाम",catRepair:"दुरुस्ती / सेवा",catDigital:"डिजिटल सेवा",catCraft:"हस्तकला",catOther:"इतर",
+labelSubBusiness:"उप-व्यवसाय",labelExperience:"अनुभव",
+exp0:"अनुभव नाही",exp1:"1–2 वर्षे",exp2:"3–5 वर्षे",exp3:"5+ वर्षे",
+labelExisting:"व्यवसाय आहे?",exNo:"नाही, नवीन",exYesExp:"हो, विस्तार",exYesNew:"हो, नवीनही",
+labelCapital:"उपलब्ध भांडवल (₹)",orType:"किंवा रक्कम:",phCapital:"रक्कम लिहा",
+cap25k:"₹25 हजार",cap50k:"₹50 हजार",cap1L:"₹1 लाख",cap2L:"₹2 लाख",cap5L:"₹5 लाख",cap10L:"₹10 लाख",
+labelLand:"स्वतःची जमीन?",landYes:"हो",landNo:"नाही",landRent:"भाड्याने",
+labelBpl:"BPL कुटुंब?",bplYes:"हो",bplNo:"नाही",
+submitBtn:"माझा अहवाल तयार करा",reportLabel:"तुमचा व्यवसाय अहवाल",
+btnListen:"ऐका",btnDownload:"PDF डाउनलोड",btnRestart:"नवीन अहवाल",voiceLang:"आवाज",
+disclaimerStrong:"महत्त्वाची सूचना:",
+disclaimerText:"हा अहवाल उपलब्ध सरकारी आकडेवारीवर आधारित आहे. प्रत्यक्ष माहितीसाठी जवळच्या बँक, DIC किंवा KVIC कार्यालयाशी संपर्क साधा.",
+footer:"ग्राम सल्लागार · हायपरलोकल बिझनेस सल्लागार",footerSub:"ग्रामीण उद्योजकांसाठी",
+errName:"कृपया नाव भरा",errDistrict:"कृपया जिल्हा निवडा",errVillage:"कृपया गाव निवडा किंवा लिहा",
+errCategory:"कृपया व्यवसाय श्रेणी निवडा",errCapital:"कृपया भांडवल भरा",
+errSummaryTitle:"कृपया खालील माहिती भरा:",
+resFin:"आर्थिक योजना",resCharts:"दृश्य विश्लेषण",resSchemes:"सरकारी योजना",resInsights:"स्थानिक विश्लेषण",resAction:"पुढील योजना",
+resBiz:"शिफारस व्यवसाय",resSuccess:"यशाची शक्यता",
+finProjectCost:"एकूण प्रकल्प खर्च",finLoan:"संभाव्य कर्ज",finOwnContrib:"तुमचं योगदान",
+finEmi:"अंदाजे मासिक EMI",finRate:"व्याज दर",finTenure:"कालावधी",finMoratorium:"सवलत कालावधी",
+finScheme:"शिफारस योजना",years:"वर्षे",months:"महिने",recommended:"शिफारस",topPick:"टॉप पिक",
+chartPie:"व्यवसाय मिश्रण",chartBar:"आर्थिक विभाजन",chartRadar:"प्रादेशिक ताकद",chartLine:"५-वर्षीय अंदाज",
+bizStartup:"सुरुवात खर्च",bizRevenue:"मासिक उत्पन्न",bizProfit:"मासिक नफा",bizROI:"ROI",
+bizMatch:"मॅच स्कोअर",bizWhy:"का शिफारस",
+successTag:"प्रॉक्सी अंदाज",
+successDesc:"ही शक्यता अनुभव, भांडवल, प्रादेशिक ताकद आणि योजना-फिटवर आधारित आहे. हमी नाही.",
+toastFill:"कृपया सर्व फील्ड भरा.",toastVoiceUnsupported:"ब्राउझर व्हॉइस सपोर्ट करत नाही. Chrome वापरा.",
+toastListening:"ऐकत आहे…",toastPdfGenerating:"PDF तयार होत आहे… प्रिंट डायलॉगमध्ये 'Save as PDF' निवडा",toastPdfDone:"PDF डाउनलोड झाली!",
+toastDemoFilled:"डेमो डेटा भरला",reportOf:"अहवाल तयार"}
+};
+
+var subBusinessOptions={
+dairy:[{v:"Milk Collection Centre",hi:"दूध संकलन केंद्र",en:"Milk collection centre",mr:"दूध संकलन केंद्र"},{v:"Paneer & Curd Unit",hi:"पनीर व दही इकाई",en:"Paneer & curd unit",mr:"पनीर व दही युनिट"},{v:"Cattle Feed & AI",hi:"पशु आहार व AI सेवा",en:"Cattle feed & AI",mr:"पशुखाद्य व AI"}],
+grocery:[{v:"Kirana Store",hi:"किराना / जनरल स्टोर",en:"Kirana store",mr:"किराणा स्टोअर"},{v:"Agri Input Shop",hi:"कृषि इनपुट दुकान",en:"Agri input shop",mr:"कृषी इनपुट दुकान"},{v:"Local Trading",hi:"स्थानिक ट्रेडिंग",en:"Local trading",mr:"स्थानिक ट्रेडिंग"}],
+agri:[{v:"Flour Mill",hi:"आटा चक्की",en:"Flour mill",mr:"पीठ गिरणी"},{v:"Dal Processing",hi:"दाल / दलहन प्रसंस्करण",en:"Dal processing",mr:"डाळ प्रक्रिया"},{v:"Food Processing",hi:"खाद्य प्रसंस्करण",en:"Food processing",mr:"अन्न प्रक्रिया"}],
+textile:[{v:"Tailoring",hi:"सिलाई / टेलरिंग",en:"Tailoring",mr:"शिवणकाम"},{v:"Boutique",hi:"बुटीक / रेडीमेड",en:"Boutique",mr:"बुटीक"},{v:"Handloom",hi:"हैंडलूम कपड़ा",en:"Handloom",mr:"हातमाग कापड"}],
+repair:[{v:"Mobile Repair",hi:"मोबाइल रिपेयर",en:"Mobile repair",mr:"मोबाइल दुरुस्ती"},{v:"Electrical Repair",hi:"इलेक्ट्रिकल रिपेयर",en:"Electrical repair",mr:"इलेक्ट्रिकल दुरुस्ती"},{v:"Two-Wheeler Repair",hi:"दोपहिया रिपेयर",en:"Two-wheeler repair",mr:"दुचाकी दुरुस्ती"},{v:"Welding Workshop",hi:"वेल्डिंग वर्कशॉप",en:"Welding workshop",mr:"वेल्डिंग कार्यशाळा"}],
+digital:[{v:"Digital Service Centre",hi:"डिजिटल सेवा केंद्र (CSC)",en:"Digital service centre",mr:"डिजिटल सेवा केंद्र"},{v:"Printing / Photocopy",hi:"प्रिंटिंग / झेरॉक्स",en:"Printing",mr:"प्रिंटिंग"},{v:"Banking Correspondent",hi:"बैंकिंग सहायक (BC)",en:"Banking correspondent",mr:"बँकिंग सहाय्यक"}],
+craft:[{v:"Handicraft Production",hi:"हस्तशिल्प निर्माण",en:"Handicraft production",mr:"हस्तकला निर्मिती"},{v:"Bamboo Products",hi:"बांस उत्पाद",en:"Bamboo products",mr:"बांबू उत्पादने"},{v:"Pottery / Clay",hi:"मिट्टी के बर्तन",en:"Pottery",mr:"मातीची भांडी"}],
+other:[{v:"Other (specify)",hi:"अन्य (कृपया बताएं)",en:"Other (specify)",mr:"इतर (सांगा)"}]
+};
+
+/* ========================================================
+   STATE
+   ======================================================== */
+var currentLang='hi';
+var pdfLang='en';
+var voiceLang=null;
+var selectedCategory=null;
+var selectedCapital=null;
+var lastReport=null;
+var llmAdviceCache={};  
+var charts={};
+
+/* ========================================================
+   I18N
+   ======================================================== */
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang===lang);
+  });
+  applyLang();
+  if(selectedCategory) renderSubBusinessSelect(selectedCategory);
+  if(document.getElementById('results').classList.contains('show') && lastReport){
+    renderResults(lastReport);
+  }
+}
+
+function applyLang(){
+  document.documentElement.lang = currentLang==='mr'?'mr':currentLang;
+  document.body.classList.toggle('en', currentLang==='en');
+
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if(dict[currentLang][k]) el.textContent = dict[currentLang][k];
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var k = el.getAttribute('data-i18n-placeholder');
+    if(dict[currentLang][k]) el.placeholder = dict[currentLang][k];
+  });
+
+  var vl = document.getElementById('voiceLangSelect');
+  if(vl && !voiceLang) vl.value = currentLang;
+
+  refreshLocationDropdowns();
+
+  if(document.getElementById('results').classList.contains('show') && lastReport){
+    renderResults(lastReport);
+    setTimeout(function(){ enhanceWithBackend(lastReport); }, 200);
+  }
+}
+
+function refreshLocationDropdowns(){
+  var L = dict[currentLang];
+  var dSel = document.getElementById('inputDistrict');
+  var tSel = document.getElementById('inputTaluka');
+  var vSel = document.getElementById('inputVillage');
+
+  if(dSel){
+    var dVal = dSel.value;
+    var firstOpt = dSel.querySelector('option[value=""]');
+    if(firstOpt) firstOpt.textContent = L.selectDistrict;
+    dSel.value = dVal;
+  }
+
+  if(tSel){
+    var tVal = tSel.value;
+    var dVal2 = dSel ? dSel.value : '';
+    if(!dVal2 || !MH_DATA[dVal2]){
+      tSel.innerHTML = '<option value="">' + L.selectTaluka + '</option>';
+    } else {
+      var opts = '<option value="">' + L.selectTaluka + '</option>';
+      Object.keys(MH_DATA[dVal2].talukas).forEach(function(name){
+        opts += '<option value="' + name + '">' + name + '</option>';
+      });
+      tSel.innerHTML = opts;
+      if(tVal) tSel.value = tVal;
+    }
+  }
+
+  if(vSel){
+    var vVal = vSel.value;
+    var dVal3 = dSel ? dSel.value : '';
+    var tVal3 = tSel ? tSel.value : '';
+    if(!dVal3 || !tVal3 || !MH_DATA[dVal3] || !MH_DATA[dVal3].talukas[tVal3]){
+      vSel.innerHTML = '<option value="">' + L.selectVillage + '</option>';
+    } else {
+      var vOpts = '<option value="">' + L.selectVillage + '</option>';
+      MH_DATA[dVal3].talukas[tVal3].forEach(function(name){
+        vOpts += '<option value="' + name + '">' + name + '</option>';
+      });
+      vSel.innerHTML = vOpts;
+      if(vVal) vSel.value = vVal;
+    }
+  }
+}
+
+/* ========================================================
+   CASCADING DROPDOWNS
+   ======================================================== */
+
+   function populateDistricts(){
+  var sel = document.getElementById('inputDistrict');
+  var L = dict[currentLang];
+  var prevVal = sel.value;
+  sel.innerHTML = '<option value="">' + L.selectDistrict + '</option>';
+  Object.keys(MH_DATA).forEach(function(d){
+    var o = document.createElement('option');
+    o.value = d;
+    o.textContent = d;
+    sel.appendChild(o);
+  });
+  if(prevVal && MH_DATA[prevVal]) sel.value = prevVal;
+}
+function onDistrictChange(){
+  var d = document.getElementById('inputDistrict').value;
+  var tSel = document.getElementById('inputTaluka');
+  var vSel = document.getElementById('inputVillage');
+  var L = dict[currentLang];
+
+  /* Reset taluka */
+  tSel.innerHTML = '<option value="">' + L.selectTaluka + '</option>';
+  if(d && MH_DATA[d]){
+    Object.keys(MH_DATA[d].talukas).forEach(function(name){
+      var o = document.createElement('option');
+      o.value = name; o.textContent = name;
+      tSel.appendChild(o);
+    });
+  }
+
+  /* Reset village */
+  vSel.innerHTML = '<option value="">' + L.selectVillage + '</option>';
+}
+
+function onTalukaChange(){
+  var d = document.getElementById('inputDistrict').value;
+  var t = document.getElementById('inputTaluka').value;
+  var vSel = document.getElementById('inputVillage');
+  var L = dict[currentLang];
+
+  vSel.innerHTML = '<option value="">' + L.selectVillage + '</option>';
+  if(d && t && MH_DATA[d] && MH_DATA[d].talukas[t]){
+    MH_DATA[d].talukas[t].forEach(function(name){
+      var o = document.createElement('option');
+      o.value = name; o.textContent = name;
+      vSel.appendChild(o);
+    });
+  }
+}
+
+/* ========================================================
+   VOICE INPUT
+   ======================================================== */
+/* 🆕 Global voice state — only ONE recognition at a time */
+var activeRecog = null;
+var activeMicBtn = null;
+
+function stopVoiceRecognition(){
+  if(activeRecog){
+    try { activeRecog.abort(); } catch(e){}
+    activeRecog = null;
+  }
+  if(activeMicBtn){
+    activeMicBtn.classList.remove('listening');
+    activeMicBtn = null;
+  }
+  hideToast();
+}
+
+function setupVoiceInputs(){
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    document.querySelectorAll('.mic-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        showToast(dict[currentLang].toastVoiceUnsupported, 'error');
+      });
+    });
+    return;
+  }
+
+  document.querySelectorAll('.mic-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var input = document.getElementById(btn.dataset.micFor);
+      if(!input) return;
+
+      /* 🆕 Same button click → STOP */
+      if(activeMicBtn === btn){
+        stopVoiceRecognition();
+        return;
+      }
+
+      /* 🆕 Different button → stop old, start new */
+      if(activeMicBtn){
+        stopVoiceRecognition();
+      }
+
+      /* 🆕 Language: use voiceLang if set, else currentLang */
+      var langCode = voiceLang || currentLang;
+      var recogLang = langCode==='hi'?'hi-IN':langCode==='mr'?'mr-IN':'en-IN';
+      var langLabel = langCode==='hi'?'हिंदी':langCode==='mr'?'मराठी':'English';
+
+      var rec = new SR();
+      rec.lang = recogLang;
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+
+      activeRecog = rec;
+      activeMicBtn = btn;
+      btn.classList.add('listening');
+      showToast(dict[currentLang].toastListening + ' · ' + langLabel);
+
+      try {
+        rec.start();
+      } catch(e){
+        console.warn('Speech start failed:', e);
+        stopVoiceRecognition();
+        return;
+      }
+
+      rec.onresult = function(event){
+        var transcript = event.results[0][0].transcript.trim();
+        input.value = transcript;
+        stopVoiceRecognition();
+      };
+
+      rec.onerror = function(event){
+        console.warn('Speech error:', event.error);
+        stopVoiceRecognition();
+      };
+
+      rec.onend = function(){
+        stopVoiceRecognition();
+      };
+    });
+  });
+
+  /* 🆕 Stop voice when tab hidden or window blurred */
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stopVoiceRecognition();
+  });
+  window.addEventListener('blur', function(){
+    stopVoiceRecognition();
+  });
+
+  /* 🆕 Escape key bhi stop kare */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && activeMicBtn) stopVoiceRecognition();
+  });
+}
+
+/* ========================================================
+   SELECTIONS
+   ======================================================== */
+function selectCapital(btn){
+  document.querySelectorAll('#capitalChips .chip').forEach(function(c){ c.classList.remove('selected'); });
+  btn.classList.add('selected');
+  selectedCapital = Number(btn.dataset.value);
+  document.getElementById('inputCapital').value = '';
+  clearFieldError('field-capital');
+}
+function clearCapitalChips(){
+  document.querySelectorAll('#capitalChips .chip').forEach(function(c){ c.classList.remove('selected'); });
+  var v = document.getElementById('inputCapital').value;
+  selectedCapital = v ? Number(v) : null;
+  if(v) clearFieldError('field-capital');
+}
+function selectCategory(btn){
+  document.querySelectorAll('#categoryChips .chip').forEach(function(c){ c.classList.remove('selected'); });
+  btn.classList.add('selected');
+  selectedCategory = btn.dataset.value;
+  clearFieldError('field-category');
+  renderSubBusinessSelect(selectedCategory);
+}
+function renderSubBusinessSelect(cat){
+  var wrap = document.getElementById('subBusinessField');
+  var sel = document.getElementById('inputSubBusiness');
+  var opts = subBusinessOptions[cat] || [];
+  if(!opts.length){ wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  var lk = currentLang==='mr'?'mr':currentLang==='en'?'en':'hi';
+  sel.innerHTML = opts.map(function(o){
+    return '<option value="' + o.v + '">' + o[lk] + '</option>';
+  }).join('');
+}
+
+/* ========================================================
+   FINANCIAL
+   ======================================================== */
+function calculateFinancial(capital){
+  /* Option B: 30% own contribution, 70% bank loan */
+  var projectCost = capital / 0.30;
+  var loan = projectCost * 0.70;
+  var ownContribution = capital;
+
+  var scheme = '', rate = 0, tenure = 0, moratorium = 0, subsidy = 0;
+
+  /* Scheme decide on LOAN amount (Mudra/PMEGP real rules) */
+  if(loan <= 50000){
+    scheme = currentLang==='hi'?'मुद्रा शिशु / सूक्ष्म वित्त':currentLang==='mr'?'मुद्रा शिशु':'Mudra Shishu / Micro';
+    rate = 6.5; tenure = 3; moratorium = 3;
+  } else if(loan <= 500000){
+    scheme = 'Mudra Kishore + PMEGP';
+    rate = 8; tenure = 5; moratorium = 6; subsidy = 15;
+  } else if(loan <= 1000000){
+    scheme = 'Mudra Tarun + PMEGP';
+    rate = 9.5; tenure = 7; moratorium = 6; subsidy = 20;
+  } else if(loan <= 2500000){
+    scheme = 'PMEGP Term Loan';
+    rate = 10.5; tenure = 7; moratorium = 6; subsidy = 25;
+  } else {
+    scheme = 'Needs custom advisory';
+    rate = null;
+  }
+
+  var emi = null;
+  if(rate && loan > 0){
+    var P = loan, R = rate/12/100, N = tenure*12;
+    emi = (P * R * Math.pow(1+R, N)) / (Math.pow(1+R, N) - 1);
+  }
+
+  return {
+    projectCost: projectCost,
+    loan: loan,
+    ownContribution: ownContribution,
+    scheme: scheme,
+    rate: rate,
+    tenureYears: tenure,
+    moratorium: moratorium,
+    emi: emi,
+    subsidy: subsidy
+  };
+}
+
+function getHyperlocalInsights(pincode, category, state){
+  var p = String(pincode || '').trim();
+  var zone = p.length >= 2 ? p.substring(0, 2) : null;
+  var zoneMap = {
+    '41':{region:{hi:'पश्चिम महाराष्ट्र',en:'Western Maharashtra',mr:'पश्चिम महाराष्ट्र'},crops:{hi:'ऊस, द्राक्षे, कांदा',en:'Sugarcane, grapes, onion',mr:'ऊस, द्राक्षे, कांदा'},road:'high'},
+    '42':{region:{hi:'मराठवाडा',en:'Marathwada',mr:'मराठवाडा'},crops:{hi:'सोयाबीन, कापूस',en:'Soybean, cotton',mr:'सोयाबीन, कापूस'},road:'medium'},
+    '43':{region:{hi:'मराठवाडा / विदर्भ',en:'Marathwada / Vidarbha',mr:'मराठवाडा / विदर्भ'},crops:{hi:'कापूस, तूर',en:'Cotton, tur',mr:'कापूस, तूर'},road:'medium'},
+    '44':{region:{hi:'विदर्भ',en:'Vidarbha',mr:'विदर्भ'},crops:{hi:'कापूस, संत्रा',en:'Cotton, orange',mr:'कापूस, संत्रा'},road:'high'}
+  };
+  var z = zoneMap[zone] || {region:{hi:state||'आपका क्षेत्र',en:state||'your area',mr:state||'तुमचा प्रदेश'},crops:{hi:'मिश्र',en:'mixed',mr:'मिश्र'},road:'medium'};
+  var ins = {
+    dairy:{market:{hi:'आसपास के गांवों और शहरी बाजारों से रोज़ाना दूध की मांग।',en:'Daily milk demand from nearby villages and urban markets.',mr:'जवळच्या गावांतून रोजची दूध मागणी.'},opportunity:{hi:'पैकेज्ड डेयरी उत्पादों की कमी।',en:'Packaged dairy is often underserved.',mr:'पॅकेज्ड दुग्ध पदार्थांची कमतरता.'}},
+    grocery:{market:{hi:'रोज़मर्रा की वस्तुओं की स्थिर मांग।',en:'Stable daily demand for essentials.',mr:'दैनंदिन वस्तूंची स्थिर मागणी.'},opportunity:{hi:'छोटे पैक और लोकल ब्रांड की मांग।',en:'Small-pack + local brands growing.',mr:'छोट्या पॅकची मागणी.'}},
+    agri:{market:{hi:'मजबूत फसल आधार।',en:'Strong crop base.',mr:'मजबूत पीक आधार.'},opportunity:{hi:'कच्चा माल स्थानीय → 20–35% मार्जिन।',en:'Local raw material → 20–35% margins.',mr:'स्थानिक कच्चा माल → २०–३५%.'}},
+    textile:{market:{hi:'त्योहार व शादी सीज़न में मांग।',en:'Festival and wedding season demand.',mr:'सण हंगामात मागणी.'},opportunity:{hi:'स्थानीय डिज़ाइन को प्रीमियम।',en:'Local design has premium potential.',mr:'स्थानिक डिझाइनला चांगला भाव.'}},
+    repair:{market:{hi:'बढ़ती दोपहिया व मोबाइल संख्या।',en:'Growing 2-wheeler and mobile.',mr:'वाढती दुचाकी व मोबाइल.'},opportunity:{hi:'ITI हो तो कुशल मज़दूर आसान।',en:'Skilled labour near an ITI.',mr:'ITI असल्यास कुशल कामगार.'}},
+    digital:{market:{hi:'सरकारी सेवाओं से नियमित ग्राहक।',en:'Government services drive footfall.',mr:'सरकारी सेवा — नियमित ग्राहक.'},opportunity:{hi:'आधार, पैन, बिल — नियमित आय।',en:'Aadhaar, PAN, bills — recurring.',mr:'आधार, पॅन, बिल — नियमित.'}},
+    craft:{market:{hi:'शहरी व पर्यटक बाजार।',en:'Urban + tourist markets.',mr:'शहरी व पर्यटक बाजार.'},opportunity:{hi:'GeM से सीधी बिक्री।',en:'GeM direct selling.',mr:'GeM थेट विक्री.'}},
+    other:{market:{hi:'स्थानीय मांग का आकलन।',en:'Assess local demand.',mr:'स्थानिक मागणीचा अंदाज.'},opportunity:{hi:'कमी वाली सेवा पहचानें।',en:'Identify underserved service.',mr:'कमी सेवा ओळखा.'}}
+  };
+  var i = ins[category] || ins.other;
+  return {
+    region: z.region[currentLang] || z.region.en,
+    crops: z.crops[currentLang] || z.crops.en,
+    road: z.road,
+    market: i.market[currentLang] || i.market.en,
+    opportunity: i.opportunity[currentLang] || i.opportunity.en
+  };
+}
+
+function getActionPlan(){
+  var plans = {
+    hi:["अपने गांव व आसपास के 20 संभावित ग्राहकों से बात करें।","नज़दीकी बैंक शाखा में मुद्रा / PMEGP योजना की जानकारी लें।","DIC (जिला उद्योग केंद्र) में रजिस्ट्रेशन व ट्रेनिंग।","पहले 3 महीने के लिए एक छोटा पायलट शुरू करें।","हिसाब-किताब के लिए डिजिटल खाता व UPI शुरू करें।"],
+    en:["Talk to 20 potential customers around your village.","Visit your nearest bank for Mudra / PMEGP eligibility.","Register at DIC for training and licensing.","Start a small pilot for 3 months.","Open a digital account and UPI for bookkeeping."],
+    mr:["गावातील २० संभाव्य ग्राहकांशी बोला.","जवळच्या बँकेत मुद्रा / PMEGP माहिती घ्या.","DIC येथे नोंदणी व प्रशिक्षण.","३ महिन्यांचा छोटा पायलट सुरू करा.","डिजिटल खाते व UPI सुरू करा."]
+  };
+  return plans[currentLang] || plans.en;
+}
+/* 🆕 Get action plan for a specific language (for PDF fallback) */
+function getActionPlanLang(lang){
+  var plans = {
+    hi:["अपने गांव व आसपास के 20 संभावित ग्राहकों से बात करें।","नज़दीकी बैंक शाखा में मुद्रा / PMEGP योजना की जानकारी लें।","DIC (जिला उद्योग केंद्र) में रजिस्ट्रेशन व ट्रेनिंग।","पहले 3 महीने के लिए एक छोटा पायलट शुरू करें।","हिसाब-किताब के लिए डिजिटल खाता व UPI शुरू करें।"],
+    en:["Talk to 20 potential customers around your village.","Visit your nearest bank for Mudra / PMEGP eligibility.","Register at DIC for training and licensing.","Start a small pilot for 3 months.","Open a digital account and UPI for bookkeeping."],
+    mr:["गावातील २० संभाव्य ग्राहकांशी बोला.","जवळच्या बँकेत मुद्रा / PMEGP माहिती घ्या.","DIC येथे नोंदणी व प्रशिक्षण.","३ महिन्यांचा छोटा पायलट सुरू करा.","डिजिटल खाते व UPI सुरू करा."]
+  };
+  return plans[lang] || plans.en;
+}
+function calcMatchScore(biz, r){
+  var s = 60;
+  if(r.capital >= biz.cost) s += 18;
+  else if(r.capital >= biz.cost*0.8) s += 8;
+  else s -= 12;
+  if(r.insights.road === 'high') s += 8;
+  else if(r.insights.road === 'medium') s += 4;
+  var e = Number(r.experience);
+  if(e >= 3) s += 8; else if(e >= 1) s += 4;
+  if(r.existing === 'yes-expand') s += 5;
+  if(r.land === 'yes') s += 4;
+  if(r.bpl === 'yes') s += 2;
+  return Math.max(35, Math.min(98, Math.round(s)));
+}
+function calcSuccessRate(r){
+  var s = 45;
+  s += Math.min(20, Number(r.experience)*4);
+  if(r.capital >= 200000) s += 10; else if(r.capital >= 100000) s += 5;
+  if(r.insights.road === 'high') s += 6; else if(r.insights.road === 'medium') s += 3;
+  s += {dairy:6,grocery:5,agri:7,textile:4,repair:8,digital:5,craft:3,other:4}[r.category] || 4;
+  if(r.existing === 'yes-expand') s += 5;
+  if(r.land === 'yes') s += 3;
+  if(r.bpl === 'yes') s += 2;
+  return Math.min(92, Math.max(28, Math.round(s)));
+}
+function getBizWhy(biz, r){
+  var reasons = [];
+  if(r.capital >= biz.cost) reasons.push(currentLang==='hi'?'आपकी पूंजी पर्याप्त है':currentLang==='mr'?'तुमचं भांडवल पुरेसं':'Capital is sufficient');
+  else reasons.push(currentLang==='hi'?'थोड़ी अतिरिक्त पूंजी चाहिए':currentLang==='mr'?'थोडं जास्त भांडवल हवं':'Slightly more capital needed');
+  if(Number(r.experience) >= 3) reasons.push(currentLang==='hi'?'आपका अनुभव मज़बूत है':currentLang==='mr'?'तुमचा अनुभव मजबूत आहे':'Strong experience');
+  if(r.insights.road === 'high') reasons.push(currentLang==='hi'?'सड़क कनेक्टिविटी अच्छी है':currentLang==='mr'?'रस्ते जोडणी चांगली':'Good road connectivity');
+  if(r.land === 'yes') reasons.push(currentLang==='hi'?'अपनी ज़मीन उपलब्ध है':currentLang==='mr'?'स्वतःची जमीन आहे':'Own land available');
+  return reasons.join(' · ');
+}
+
+/* ========================================================
+   VALIDATION
+   ======================================================== */
+function clearFieldError(id){
+  var el = document.getElementById(id);
+  if(el) el.classList.remove('error');
+  var s = document.getElementById('errorSummary');
+  if(s) s.classList.remove('show');
+}
+function clearAllErrors(){
+  document.querySelectorAll('.field.error').forEach(function(el){ el.classList.remove('error'); });
+  var s = document.getElementById('errorSummary');
+  if(s) s.classList.remove('show');
+  document.getElementById('errorList').innerHTML = '';
+}
+
+document.addEventListener('input', function(e){
+  var w = e.target.closest && e.target.closest('.field.error');
+  if(w) w.classList.remove('error');
+  var s = document.getElementById('errorSummary');
+  if(s) s.classList.remove('show');
+});
+document.addEventListener('click', function(e){
+  if(e.target.classList && e.target.classList.contains('chip')){
+    document.querySelectorAll('.field.error').forEach(function(w){ w.classList.remove('error'); });
+    var s = document.getElementById('errorSummary');
+    if(s) s.classList.remove('show');
+  }
+});
+
+/* ========================================================
+   GENERATE REPORT
+   ======================================================== */
+function generateReport(){
+  var name = document.getElementById('inputName').value.trim();
+  var gender = document.getElementById('inputGender').value;
+  var family = document.getElementById('inputFamily').value;
+  var caste = document.getElementById('inputCaste').value;
+  var district = document.getElementById('inputDistrict').value;
+  var taluka = document.getElementById('inputTaluka').value;
+  var villageSel = document.getElementById('inputVillage').value;
+  var villageManual = document.getElementById('inputVillageManual').value.trim();
+  var village = villageSel || villageManual;
+  var pincode = document.getElementById('inputPincode').value.trim();
+  var capitalInput = document.getElementById('inputCapital').value;
+  var capital = capitalInput ? Number(capitalInput) : selectedCapital;
+  var subBusiness = document.getElementById('inputSubBusiness').value;
+  var experience = document.getElementById('inputExperience').value;
+  var existing = document.getElementById('inputExisting').value;
+  var land = document.getElementById('inputLand').value;
+  var bpl = document.getElementById('inputBpl').value;
+
+  clearAllErrors();
+  var L = dict[currentLang];
+  var errors = [];
+  if(!name){ document.getElementById('field-name').classList.add('error'); errors.push(L.errName); }
+  if(!district){ document.getElementById('field-district').classList.add('error'); errors.push(L.errDistrict); }
+  if(!village){ document.getElementById('field-village').classList.add('error'); errors.push(L.errVillage); }
+  if(!selectedCategory){ document.getElementById('field-category').classList.add('error'); errors.push(L.errCategory); }
+  if(!capital || capital <= 0){ document.getElementById('field-capital').classList.add('error'); errors.push(L.errCapital); }
+
+  if(errors.length > 0){
+    var sum = document.getElementById('errorSummary');
+    document.getElementById('errorSummaryTitle').textContent = L.errSummaryTitle;
+    document.getElementById('errorList').innerHTML = errors.map(function(e){ return '<li>'+e+'</li>'; }).join('');
+    sum.classList.add('show');
+    sum.scrollIntoView({behavior:'smooth', block:'center'});
+    showToast(L.toastFill, 'error');
+    return;
+  }
+
+  var fin = calculateFinancial(capital);
+  var insights = getHyperlocalInsights(pincode, selectedCategory, 'Maharashtra');
+  var actionPlan = getActionPlan();
+  var successRate = calcSuccessRate({capital:capital,experience:experience,existing:existing,land:land,bpl:bpl,category:selectedCategory,insights:insights});
+  
+  llmAdviceCache = {}; 
+
+  lastReport = {
+    name:name, gender:gender, family:family, caste:caste,
+    state:'Maharashtra', district:district, taluka:taluka,
+    village:village, pincode:pincode, capital:capital,
+    subBusiness:subBusiness, experience:experience, existing:existing,
+    land:land, bpl:bpl, category:selectedCategory,
+    fin:fin, insights:insights, actionPlan:actionPlan,
+    successRate:successRate, lang:currentLang,
+    timestamp:new Date().toLocaleString('en-IN')
+  };
+
+  renderResults(lastReport);
+  document.getElementById('results').classList.add('show');
+  document.getElementById('form-sections').style.display = 'none';
+  document.getElementById('progressTrack').style.display = 'none';
+  document.getElementById('hero').style.display = 'none';
+  setTimeout(function(){
+    document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 80);
+}
+
+/* ========================================================
+   RENDER RESULTS
+   ======================================================== */
+function renderResults(r){
+  var L = dict[currentLang];
+  var inr = function(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); };
+  var catLabel = {
+    dairy:L.catDairy, grocery:L.catGrocery, agri:L.catAgri, textile:L.catTextile,
+    repair:L.catRepair, digital:L.catDigital, craft:L.catCraft, other:L.catOther
+  }[r.category] || r.category;
+  var langKey = currentLang==='mr'?'mr':currentLang==='en'?'en':'hi';
+
+  document.getElementById('reportTitle').textContent = r.name ? L.reportOf + ': ' + r.name : L.reportOf;
+  document.getElementById('reportLocation').textContent = [r.village, r.taluka, r.district, r.state].filter(Boolean).join(', ');
+  document.getElementById('reportBusiness').textContent = catLabel;
+  document.getElementById('reportCapital').textContent = inr(r.capital);
+
+  /* Financial */
+  var finHTML = '<div class="fin-grid">' +
+    '<div class="fin-cell wide"><div class="label">' + L.finProjectCost + '</div><div class="value">' + inr(r.fin.projectCost) + '</div></div>' +
+    '<div class="fin-cell"><div class="label">' + L.finLoan + '</div><div class="value">' + inr(r.fin.loan) + '</div></div>' +
+    '<div class="fin-cell"><div class="label">' + L.finOwnContrib + '</div><div class="value">' + inr(r.fin.ownContribution) + '</div></div>';
+  if(r.fin.emi){
+    finHTML += '<div class="fin-cell emi"><div class="label">' + L.finEmi + '</div><div class="value">' + inr(r.fin.emi) + '</div></div>' +
+      '<div class="fin-cell"><div class="label">' + L.finRate + '</div><div class="value">' + r.fin.rate + '%</div></div>' +
+      '<div class="fin-cell"><div class="label">' + L.finTenure + '</div><div class="value">' + r.fin.tenureYears + ' ' + L.years + '</div></div>' +
+      '<div class="fin-cell"><div class="label">' + L.finMoratorium + '</div><div class="value">' + r.fin.moratorium + ' ' + L.months + '</div></div>';
+  }
+  finHTML += '</div><div class="scheme-item recommended" style="margin-top:6px"><div class="scheme-badge">🏛️</div><div><h4>' + L.finScheme + '</h4><p><strong>' + r.fin.scheme + '</strong>' + (r.fin.subsidy ? ' · ~' + r.fin.subsidy + '% subsidy' : '') + '</p></div></div>';
+
+  /* Business Recommendations */
+  var bizList = BUSINESS_CATALOG[r.category] || BUSINESS_CATALOG.other;
+  var scoredBiz = bizList.map(function(b){
+    var copy = {};
+    for(var k in b) copy[k] = b[k];
+    copy.match = calcMatchScore(b, r);
+    copy.why = getBizWhy(b, r);
+    return copy;
+  });
+  scoredBiz.sort(function(a,b){ return b.match - a.match; });
+
+  var bizHTML = '<div class="biz-grid">';
+  scoredBiz.forEach(function(b, i){
+    var bizName = b[langKey] || b.n;
+    bizHTML += '<div class="biz-card' + (i === 0 ? ' top-pick' : '') + '">' +
+      (i === 0 ? '<span class="top-badge">⭐ ' + L.topPick + '</span>' : '') +
+      '<div class="biz-icon">' + b.icon + '</div>' +
+      '<div class="biz-title">' + bizName + '</div>' +
+      '<div class="biz-sub">' + b.en + '</div>' +
+      '<div class="biz-stats">' +
+        '<div class="biz-stat"><div class="lbl">' + L.bizStartup + '</div><div class="val">' + inr(b.cost) + '</div></div>' +
+        '<div class="biz-stat"><div class="lbl">' + L.bizRevenue + '</div><div class="val">' + inr(b.rev) + '</div></div>' +
+        '<div class="biz-stat"><div class="lbl">' + L.bizProfit + '</div><div class="val">' + inr(b.profit) + '</div></div>' +
+        '<div class="biz-stat"><div class="lbl">' + L.bizROI + '</div><div class="val">' + b.roi + '%</div></div>' +
+      '</div>' +
+      '<div class="biz-match"><div class="biz-match-lbl"><span>' + L.bizMatch + '</span><span>' + b.match + '%</span></div><div class="biz-match-bar"><div class="biz-match-fill" data-width="' + b.match + '"></div></div></div>' +
+      '<div class="biz-why"><strong>' + L.bizWhy + ':</strong> ' + b.why + '</div>' +
+    '</div>';
+  });
+  bizHTML += '</div>';
+
+  /* Success Gauge */
+  var gaugeHTML = '<div class="gauge-wrap">' +
+    '<div class="gauge-canvas"><canvas id="gaugeChart"></canvas></div>' +
+    '<div class="gauge-info">' +
+      '<div class="gauge-title">' + r.successRate + '%</div>' +
+      '<span class="gauge-tag">' + L.successTag + '</span>' +
+      '<p class="gauge-desc" style="margin-top:10px">' + L.successDesc + '</p>' +
+    '</div>' +
+  '</div>';
+
+  /* Charts */
+  var chartsHTML = '<div class="chart-wrap"><div class="chart-title">📊 ' + L.chartBar + '</div><div class="chart-canvas-wrap"><canvas id="chartBar"></canvas></div></div>' +
+    '<div class="chart-wrap"><div class="chart-title">🥧 ' + L.chartPie + '</div><div class="chart-canvas-wrap"><canvas id="chartPie"></canvas></div></div>' +
+    '<div class="chart-wrap"><div class="chart-title">🎯 ' + L.chartRadar + '</div><div class="chart-canvas-wrap"><canvas id="chartRadar"></canvas></div></div>' +
+    '<div class="chart-wrap"><div class="chart-title">📈 ' + L.chartLine + '</div><div class="chart-canvas-wrap"><canvas id="chartLine"></canvas></div></div>';
+
+  /* Schemes */
+  var schemeHTML = '<div class="scheme-list">' +
+    '<div class="scheme-item recommended"><div class="scheme-badge">1</div><div><h4>PMEGP<span class="tag">' + L.recommended + '</span></h4><p>Up to ₹25L manufacturing / ₹10L service. Subsidy 15–35%. Apply via KVIC / DIC.</p></div></div>' +
+    '<div class="scheme-item"><div class="scheme-badge">2</div><div><h4>Mudra Loan</h4><p>Shishu ≤₹50K, Kishore ₹50K–₹5L, Tarun ₹5L–₹10L. No collateral.</p></div></div>' +
+    '<div class="scheme-item"><div class="scheme-badge">3</div><div><h4>SRLM</h4><p>SHG-based micro-enterprise support. Contact Gram Panchayat / BDO.</p></div></div>' +
+  '</div>';
+
+  /* Insights */
+  var insightHTML = '<div class="insight-list">' +
+    '<div class="insight"><div class="insight-icon">📊</div><div><h4>' + (currentLang==='hi'?'बाज़ार पहुंच':currentLang==='mr'?'बाजार पोहोच':'Market reach') + '</h4><p>' + r.insights.market + '</p></div></div>' +
+    '<div class="insight"><div class="insight-icon">💡</div><div><h4>' + (currentLang==='hi'?'अवसर':currentLang==='mr'?'संधी':'Opportunity') + '</h4><p>' + r.insights.opportunity + '</p></div></div>' +
+    '<div class="insight"><div class="insight-icon">🌾</div><div><h4>' + (currentLang==='hi'?'क्षेत्र व फसल':currentLang==='mr'?'प्रदेश व पीक':'Region & crops') + '</h4><p>' + r.insights.region + ' · ' + r.insights.crops + '</p></div></div>' +
+  '</div>';
+
+  /* Actions */
+  var actionHTML = '<div class="action-list">' + r.actionPlan.map(function(a){ return '<div class="action-item"><p>' + a + '</p></div>'; }).join('') + '</div>';
+
+  document.getElementById('resultsContent').innerHTML =
+    '<div class="result-card"><h3><span class="icon">💰</span>' + L.resFin + '</h3>' + finHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">💼</span>' + L.resBiz + '</h3>' + bizHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">🎯</span>' + L.resSuccess + '</h3>' + gaugeHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">📊</span>' + L.resCharts + '</h3>' + chartsHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">🏛️</span>' + L.resSchemes + '</h3>' + schemeHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">📍</span>' + L.resInsights + '</h3>' + insightHTML + '</div>' +
+    '<div class="result-card"><h3><span class="icon">✅</span>' + L.resAction + '</h3>' + actionHTML + '</div>';
+
+  setTimeout(function(){
+    document.querySelectorAll('.biz-match-fill').forEach(function(el){
+      el.style.width = el.dataset.width + '%';
+    });
+    renderCharts(r);
+    enhanceWithBackend(r);
+  }, 120);
+}
+/* ========================================================
+   BACKEND ENHANCEMENT (ML + LLM + MongoDB)
+   ======================================================== */
+/* 🆕 Cache for backend responses (keyed by language) */
+var backendCache = {};
+
+function enhanceWithBackend(r){
+  var backend = 'http://127.0.0.1:8000';
+  var lang = currentLang || 'en';
+
+  // 🆕 Remove old box if exists (avoid duplicates on language switch)
+  var oldBox = document.getElementById('backendEnhanceBox');
+  if(oldBox) oldBox.remove();
+
+  var box = document.createElement('div');
+  box.id = 'backendEnhanceBox';
+  box.className = 'result-card';
+  box.innerHTML = '<h3><span class="icon">🤖</span>' + getAdvisoryTitle(lang) + ' ' +
+    '<span class="gauge-tag" style="margin-left:auto;background:rgba(219,140,30,.15);color:#A8630E;font-size:.7rem;padding:3px 8px;border-radius:8px;">Groq LLM · ML · MongoDB</span></h3>' +
+    '<p style="color:var(--muted);font-size:.9rem">' + getAdvisoryLoading(lang) + '</p>';
+
+  var resultsContent = document.getElementById('resultsContent');
+  if(resultsContent) resultsContent.appendChild(box);
+
+  // 🆕 Cache hit — render from cache instantly (no API call)
+  var cacheKey = r.district + '|' + r.village + '|' + r.capital + '|' + lang;
+  if(backendCache[cacheKey]){
+    renderBackendEnhancement(box, backendCache[cacheKey], r);
+    return;
+  }
+
+  var payload = {
+    district: r.district,
+    village: r.village,
+    budget: Number(r.capital),
+    name: r.name || null,
+    language: lang          // 🆕 send current language to backend
+  };
+
+  fetch(backend + '/recommend', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(resp){
+    if(!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  })
+  .then(function(data){
+    backendCache[cacheKey] = data;      // 🆕 save to cache
+    renderBackendEnhancement(box, data, r);
+  })
+  .catch(function(err){
+    console.warn('Backend enhancement failed:', err);
+    box.innerHTML = '<h3><span class="icon">🤖</span>' + getAdvisoryTitle(lang) + '</h3>' +
+      '<p style="color:var(--muted);font-size:.9rem">' + getAdvisoryError(lang) + '</p>';
+  });
+}
+
+/* 🆕 Helper: 3-language strings for the advisory box */
+function getAdvisoryTitle(lang){
+  return {hi:'AI सलाह', en:'AI Advisory', mr:'AI सल्ला'}[lang] || 'AI Advisory';
+}
+function getAdvisoryLoading(lang){
+  return {
+    hi:'AI-आधारित व्यक्तिगत सलाह तैयार हो रही है…',
+    en:'Generating AI-powered personalized advice…',
+    mr:'AI-आधारित वैयक्तिक सल्ला तयार होत आहे…'
+  }[lang] || 'Loading…';
+}
+function getAdvisoryError(lang){
+  return {
+    hi:'बैकएंड उपलब्ध नहीं है। ऊपर नियम-आधारित विश्लेषण पूर्ण है।',
+    en:'Backend not reachable. Rule-based analysis shown above is complete.',
+    mr:'बॅकएंड उपलब्ध नाही. वरील नियम-आधारित विश्लेषण पूर्ण आहे.'
+  }[lang] || 'Backend not reachable.';
+}
+
+function renderBackendEnhancement(box, data, r){
+  var lang = currentLang || 'en';
+
+     if(data.llm_advice){
+    llmAdviceCache[lang] = data.llm_advice;
+  }
+
+  // 🆕 3-language strings
+  var S = {
+    hi:{
+      title:'AI सलाह',
+      cluster:'ML क्लस्टर विश्लेषण',
+      clusterId:'क्लस्टर ID',
+      silhouette:'सिल्हूट',
+      rfTitle:'रैंडम फॉरेस्ट प्रॉक्सी भविष्यवाणी',
+      rfCategory:'अनुमानित श्रेणी',
+      rfConfidence:'विश्वास',
+      llmHyperlocal:'हाइपरलोकल विश्लेषण (LLM)',
+      llmAction:'व्यक्तिगत कार्य योजना (LLM)',
+      llmExec:'कार्यकारी सारांश (LLM)',
+      noLlm:'LLM सलाह उपलब्ध नहीं है। ऊपर ML परिणाम दिखाए गए हैं।',
+      saved:'MongoDB में सहेजा गया · ID:'
+    },
+    en:{
+      title:'AI Advisory',
+      cluster:'ML Cluster Analysis',
+      clusterId:'Cluster ID',
+      silhouette:'Silhouette',
+      rfTitle:'Random Forest Proxy Prediction',
+      rfCategory:'Predicted category',
+      rfConfidence:'Confidence',
+      llmHyperlocal:'Hyperlocal Analysis (LLM)',
+      llmAction:'Personalized Action Plan (LLM)',
+      llmExec:'Executive Summary (LLM)',
+      noLlm:'LLM advice not available. ML results shown above.',
+      saved:'Saved to MongoDB · ID:'
+    },
+    mr:{
+      title:'AI सल्ला',
+      cluster:'ML क्लस्टर विश्लेषण',
+      clusterId:'क्लस्टर ID',
+      silhouette:'सिल्हूट',
+      rfTitle:'रँडम फॉरेस्ट प्रॉक्सी अंदाज',
+      rfCategory:'अंदाजित श्रेणी',
+      rfConfidence:'विश्वास',
+      llmHyperlocal:'हायपरलोकल विश्लेषण (LLM)',
+      llmAction:'वैयक्तिक कृती योजना (LLM)',
+      llmExec:'कार्यकारी सारांश (LLM)',
+      noLlm:'LLM सल्ला उपलब्ध नाही. वरील ML निकाल दर्शविले आहेत.',
+      saved:'MongoDB मध्ये जतन केले · ID:'
+    }
+  }[lang] || {title:'AI Advisory', cluster:'ML Cluster Analysis', clusterId:'Cluster ID', silhouette:'Silhouette', rfTitle:'Random Forest Proxy Prediction', rfCategory:'Predicted category', rfConfidence:'Confidence', llmHyperlocal:'Hyperlocal Analysis (LLM)', llmAction:'Personalized Action Plan (LLM)', llmExec:'Executive Summary (LLM)', noLlm:'LLM advice not available.', saved:'Saved to MongoDB · ID:'};
+
+  var html = '<h3><span class="icon">🤖</span>' + S.title + ' ' +
+    '<span class="gauge-tag" style="margin-left:auto;background:rgba(219,140,30,.15);color:#A8630E;font-size:.7rem;padding:3px 8px;border-radius:8px;">Groq LLM · ML · MongoDB</span></h3>';
+
+  /* ML Cluster */
+  if(data.cluster){
+    html += '<div class="insight" style="padding-bottom:14px;border-bottom:1px dashed var(--line-soft);margin-bottom:14px">' +
+      '<div class="insight-icon">🧩</div>' +
+      '<div><h4>' + S.cluster + '</h4>' +
+      '<p><strong>' + S.clusterId + ':</strong> ' + data.cluster.cluster_id +
+      ' · <strong>' + S.silhouette + ':</strong> ' + (data.cluster.silhouette || '—') +
+      (data.cluster.cluster_profile && data.cluster.cluster_profile.description ?
+        '<br>' + escapeHtml(data.cluster.cluster_profile.description) : '') +
+      '</p></div></div>';
+  }
+
+  /* RF */
+  if(data.ml_prediction){
+    html += '<div class="insight" style="padding-bottom:14px;border-bottom:1px dashed var(--line-soft);margin-bottom:14px">' +
+      '<div class="insight-icon">🌲</div>' +
+      '<div><h4>' + S.rfTitle + '</h4>' +
+      '<p><strong>' + S.rfCategory + ':</strong> ' + escapeHtml(data.ml_prediction.predicted_category) +
+      ' · <strong>' + S.rfConfidence + ':</strong> ' + (data.ml_prediction.confidence * 100).toFixed(1) + '%' +
+      '<br><em style="font-size:.82rem;color:var(--muted)">' + escapeHtml(data.ml_prediction.disclaimer) + '</em></p></div></div>';
+  }
+
+  /* LLM */
+  var advice = data.llm_advice;
+  if(advice){
+    if(advice.hyperlocal_summary){
+      html += '<div class="insight" style="padding-bottom:14px;border-bottom:1px dashed var(--line-soft);margin-bottom:14px">' +
+        '<div class="insight-icon">📍</div>' +
+        '<div><h4>' + S.llmHyperlocal + '</h4><p>' + escapeHtml(advice.hyperlocal_summary) + '</p></div></div>';
+    }
+    if(advice.custom_action_plan && advice.custom_action_plan.length){
+      html += '<div style="margin-bottom:14px"><h4 style="font-family:Mukta,sans-serif;font-size:.95rem;margin-bottom:10px;color:var(--forest-dark)">📋 ' + S.llmAction + '</h4><div class="action-list">' +
+        advice.custom_action_plan.map(function(a){
+          return '<div class="action-item"><p>' + escapeHtml(a) + '</p></div>';
+        }).join('') +
+        '</div></div>';
+    }
+    if(advice.executive_summary){
+      html += '<div class="disclaimer" style="background:linear-gradient(135deg,#FDF4E3,#FCEBCB);border-left-color:var(--ochre);margin-top:10px">' +
+        '<strong>' + S.llmExec + ':</strong> ' + escapeHtml(advice.executive_summary) +
+        '</div>';
+    }
+    if(advice.business_reasons){
+      updateBusinessReasons(advice.business_reasons);
+    }
+  } else {
+    html += '<p style="color:var(--muted);font-size:.9rem">' + S.noLlm + '</p>';
+  }
+
+  if(data.report_id){
+    html += '<p style="font-size:.75rem;color:var(--muted);margin-top:12px;text-align:right">💾 ' + S.saved + ' <code>' + data.report_id + '</code></p>';
+  }
+
+  box.innerHTML = html;
+}
+
+function updateBusinessReasons(reasonsMap){
+  document.querySelectorAll('.biz-card').forEach(function(card){
+    var titleEl = card.querySelector('.biz-title');
+    if(!titleEl) return;
+    var bizName = titleEl.textContent.trim();
+    if(reasonsMap[bizName]){
+      var whyEl = card.querySelector('.biz-why');
+      if(whyEl){
+        whyEl.innerHTML = '<strong>🤖 AI:</strong> ' + escapeHtml(reasonsMap[bizName]);
+      }
+    }
+  });
+}
+
+function escapeHtml(s){
+  if(!s) return '';
+  return String(s).replace(/[&<>"']/g, function(m){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+  });
+}
+
+/* ========================================================
+   CHARTS
+   ======================================================== */
+function destroyCharts(){
+  Object.values(charts).forEach(function(c){ try { c.destroy(); } catch(e){} });
+  charts = {};
+}
+function renderCharts(r){
+  destroyCharts();
+  var L = dict[currentLang];
+
+  /* Bar */
+  var bc = document.getElementById('chartBar');
+  if(bc){
+    charts.bar = new Chart(bc, {
+      type:'bar',
+      data:{
+        labels:[L.finOwnContrib, L.finLoan, L.finProjectCost],
+        datasets:[{
+          label:'₹',
+          data:[r.capital, r.fin.loan, r.fin.projectCost],
+          backgroundColor:['#DB8C1E', '#2E6B4E', '#15402D'],
+          borderRadius:8, borderSkipped:false, maxBarThickness:60
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        animation:{duration:1200, easing:'easeOutQuart'},
+        plugins:{legend:{display:false}, tooltip:{callbacks:{label:function(ctx){ return '₹' + Math.round(ctx.parsed.y).toLocaleString('en-IN'); }}}},
+        scales:{
+          y:{beginAtZero:true, ticks:{callback:function(v){ return '₹' + Math.round(v).toLocaleString('en-IN'); }}, grid:{color:'rgba(22,36,26,0.06)'}},
+          x:{grid:{display:false}}
+        }
+      }
+    });
+  }
+
+  /* Pie */
+  var pc = document.getElementById('chartPie');
+  if(pc){
+    var mixMap = {dairy:[40,25,20,15],grocery:[50,20,20,10],agri:[35,30,20,15],textile:[45,25,20,10],repair:[40,35,15,10],digital:[55,25,10,10],craft:[45,30,15,10],other:[40,30,20,10]};
+    var mix = mixMap[r.category] || mixMap.other;
+    charts.pie = new Chart(pc, {
+      type:'doughnut',
+      data:{
+        labels:[
+          currentLang==='hi'?'मुख्य':currentLang==='mr'?'मुख्य':'Main',
+          currentLang==='hi'?'सह-उत्पाद':currentLang==='mr'?'सह':'Secondary',
+          currentLang==='hi'?'सेवा':currentLang==='mr'?'सेवा':'Service',
+          currentLang==='hi'?'अन्य':currentLang==='mr'?'इतर':'Other'
+        ],
+        datasets:[{data:mix, backgroundColor:['#15402D','#2E6B4E','#DB8C1E','#B54A24'], borderWidth:0, hoverOffset:8}]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false, cutout:'62%',
+        animation:{animateRotate:true, duration:1400},
+        plugins:{
+          legend:{position:'bottom', labels:{padding:14, font:{size:12, family:"Mukta,sans-serif"}}},
+          tooltip:{callbacks:{label:function(ctx){ return ctx.label + ': ' + ctx.parsed + '%'; }}}
+        }
+      }
+    });
+  }
+
+  /* Radar */
+  var rc = document.getElementById('chartRadar');
+  if(rc){
+    var roadScore = r.insights.road==='high'?85:r.insights.road==='medium'?65:45;
+    var capScore = Math.min(100, Math.round((r.capital/500000)*100));
+    var marketScore = r.insights.road==='high'?80:60;
+    var compScore = {dairy:65,grocery:80,agri:60,textile:55,repair:70,digital:45,craft:40,other:60}[r.category] || 60;
+    charts.radar = new Chart(rc, {
+      type:'radar',
+      data:{
+        labels:[
+          currentLang==='hi'?'सड़क':currentLang==='mr'?'रस्ता':'Roads',
+          currentLang==='hi'?'पूंजी':currentLang==='mr'?'भांडवल':'Capital',
+          currentLang==='hi'?'बाज़ार':currentLang==='mr'?'बाजार':'Market',
+          currentLang==='hi'?'प्रतिस्पर्धा':currentLang==='mr'?'स्पर्धा':'Competition',
+          currentLang==='hi'?'अवसंरचना':currentLang==='mr'?'पायाभूत':'Infra',
+          currentLang==='hi'?'योजना':currentLang==='mr'?'योजना':'Support'
+        ],
+        datasets:[{
+          label:'Score',
+          data:[roadScore, capScore, marketScore, compScore, 70, 75],
+          backgroundColor:'rgba(21,64,45,0.22)', borderColor:'#15402D', borderWidth:2,
+          pointBackgroundColor:'#DB8C1E', pointBorderColor:'#fff', pointRadius:5
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false, animation:{duration:1200},
+        plugins:{legend:{display:false}},
+        scales:{r:{beginAtZero:true, max:100, ticks:{display:false, stepSize:25}, grid:{color:'rgba(22,36,26,0.1)'}, pointLabels:{font:{size:11, family:"Mukta,sans-serif", weight:'600'}}}}
+      }
+    });
+  }
+
+  /* Line - 5 year projection */
+  var lc = document.getElementById('chartLine');
+  if(lc){
+    var yearlyProfit = r.fin.emi ? (r.fin.emi * 0.5) : (r.capital * 0.1);
+    var yearlyGrowth = 1.12;
+    var labels5 = [], data5 = [], cum = 0;
+    for(var y=1; y<=5; y++){
+      labels5.push('Y' + y);
+      cum += yearlyProfit * Math.pow(yearlyGrowth, y-1);
+      data5.push(Math.round(cum));
+    }
+    charts.line = new Chart(lc, {
+      type:'line',
+      data:{
+        labels:labels5,
+        datasets:[{
+          label: currentLang==='hi'?'संचित मुनाफा':currentLang==='mr'?'संचित नफा':'Cumulative Profit',
+          data:data5, borderColor:'#DB8C1E', backgroundColor:'rgba(219,140,30,0.14)',
+          borderWidth:3, fill:true, tension:.4, pointRadius:5,
+          pointBackgroundColor:'#DB8C1E', pointBorderColor:'#fff', pointBorderWidth:2
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false, animation:{duration:1500},
+        plugins:{
+          legend:{display:true, position:'bottom', labels:{padding:12}},
+          tooltip:{callbacks:{label:function(ctx){ return '₹' + Math.round(ctx.parsed.y).toLocaleString('en-IN'); }}}
+        },
+        scales:{x:{grid:{display:false}}, y:{beginAtZero:true, ticks:{callback:function(v){ return '₹' + Math.round(v/1000) + 'K'; }}, grid:{color:'rgba(22,36,26,0.06)'}}}
+      }
+    });
+  }
+
+  /* Gauge */
+  var gc = document.getElementById('gaugeChart');
+  if(gc){
+    var pct = r.successRate;
+    var color = pct>=70?'#2E6B4E':pct>=50?'#DB8C1E':'#B54A24';
+    charts.gauge = new Chart(gc, {
+      type:'doughnut',
+      data:{
+        labels:['Success','Remaining'],
+        datasets:[{
+          data:[pct, 100-pct],
+          backgroundColor:[color, 'rgba(22,36,26,0.08)'],
+          borderWidth:0, circumference:270, rotation:-135, cutout:'75%'
+        }]
+      },
+      options:{responsive:true, maintainAspectRatio:false, animation:{animateRotate:true, duration:1600}, plugins:{legend:{display:false}, tooltip:{enabled:false}}}
+    });
+  }
+}
+
+/* ========================================================
+   SPEAK REPORT
+   ======================================================== */
+/* 🆕 Preload voices (browsers load them async) */
+function loadVoices(){
+  return new Promise(function(resolve){
+    var voices = window.speechSynthesis.getVoices();
+    if(voices.length > 0){ resolve(voices); return; }
+    window.speechSynthesis.onvoiceschanged = function(){
+      resolve(window.speechSynthesis.getVoices());
+    };
+    /* Fallback timeout in case onvoiceschanged never fires */
+    setTimeout(function(){
+      resolve(window.speechSynthesis.getVoices());
+    }, 1000);
+  });
+}
+
+/* 🆕 Pick best matching voice for a language code */
+function pickBestVoice(voices, langCode){
+  var target = langCode==='hi'?'hi':langCode==='mr'?'mr':'en';
+
+  /* 1) Exact match e.g. "mr-IN" or "hi-IN" */
+  for(var i=0;i<voices.length;i++){
+    var vLang = (voices[i].lang || '').toLowerCase();
+    if(vLang.indexOf(target + '-') === 0) return voices[i];
+  }
+
+  /* 2) Marathi fallback → Hindi (same Devanagari script) */
+  if(langCode === 'mr'){
+    for(var j=0;j<voices.length;j++){
+      var vLang2 = (voices[j].lang || '').toLowerCase();
+      if(vLang2.indexOf('hi-') === 0) return voices[j];
+    }
+  }
+
+  /* 3) Hindi/Marathi fallback → Indian English */
+  if(langCode === 'hi' || langCode === 'mr'){
+    for(var k=0;k<voices.length;k++){
+      var vLang3 = (voices[k].lang || '').toLowerCase();
+      if(vLang3.indexOf('en-in') === 0) return voices[k];
+    }
+  }
+
+  /* 4) Any Indian voice */
+  for(var m=0;m<voices.length;m++){
+    var vLang4 = (voices[m].lang || '').toLowerCase();
+    if(vLang4.indexOf('-in') > -1) return voices[m];
+  }
+
+  /* 5) Default voice */
+  return voices[0] || null;
+}
+
+/* 🆕 Stop any speaking */
+function stopSpeaking(){
+  try { window.speechSynthesis.cancel(); } catch(e){}
+  var btn = document.getElementById('speakBtn');
+  if(btn){
+    btn.classList.remove('speaking');
+    var label = btn.querySelector('span:last-child');
+    if(label && dict[currentLang]) label.textContent = dict[currentLang].btnListen;
+  }
+}
+
+async function speakReport(){
+  if(!lastReport) return;
+  var btn = document.getElementById('speakBtn');
+  var vl = voiceLang || currentLang;
+
+  /* 🆕 If already speaking → stop */
+  if(window.speechSynthesis.speaking){
+    stopSpeaking();
+    return;
+  }
+
+  var r = lastReport;
+  var inr = function(n){ return Math.round(n).toLocaleString('en-IN'); };
+  var text;
+
+  if(vl === 'hi'){
+    text = 'नमस्ते ' + (r.name || '') + '। आपकी व्यापार रिपोर्ट तैयार है। कुल परियोजना लागत ' + inr(r.fin.projectCost) + ' रुपए। आपको ' + inr(r.fin.loan) + ' रुपए तक लोन मिल सकता है, ' + r.fin.scheme + ' के तहत। ' + (r.fin.emi ? 'अनुमानित मासिक किस्त ' + inr(r.fin.emi) + ' रुपए होगी। ' : '') + 'अनुमानित सफलता दर ' + r.successRate + ' प्रतिशत है। क्षेत्र: ' + r.insights.region + '. आगे की योजना: अपने नज़दीकी बैंक या DIC कार्यालय से संपर्क करें।';
+  } else if(vl === 'mr'){
+    text = 'नमस्कार ' + (r.name || '') + '. तुमचा व्यवसाय अहवाल तयार आहे. एकूण प्रकल्प खर्च ' + inr(r.fin.projectCost) + ' रुपये. तुम्हाला ' + inr(r.fin.loan) + ' रुपयांपर्यंत कर्ज मिळू शकते. ' + (r.fin.emi ? 'अंदाजे मासिक हप्ता ' + inr(r.fin.emi) + ' रुपये. ' : '') + 'अंदाजित यश दर ' + r.successRate + ' टक्के. प्रदेश: ' + r.insights.region + '. पुढील पायरी: जवळच्या बँक किंवा DIC कार्यालयाशी संपर्क साधा.';
+  } else {
+    text = 'Hello ' + (r.name || '') + '. Your report is ready. Total project cost is ' + inr(r.fin.projectCost) + ' rupees. You may get a loan of up to ' + inr(r.fin.loan) + ' rupees under ' + r.fin.scheme + '. ' + (r.fin.emi ? 'Estimated monthly EMI is ' + inr(r.fin.emi) + ' rupees. ' : '') + 'Estimated success rate is ' + r.successRate + ' percent. Region: ' + r.insights.region + '.';
+  }
+
+  /* 🆕 Load voices (async) then speak */
+  var voices = await loadVoices();
+  var chosen = pickBestVoice(voices, vl);
+
+  var utt = new SpeechSynthesisUtterance(text);
+  if(chosen){
+    utt.voice = chosen;
+    utt.lang = chosen.lang;
+  } else {
+    utt.lang = vl==='hi'?'hi-IN':vl==='mr'?'mr-IN':'en-IN';
+  }
+  utt.rate = 0.9;      /* Slightly slower for clarity */
+  utt.pitch = 1.0;
+  utt.volume = 1.0;
+
+  /* Update button label to "Stop" */
+  btn.classList.add('speaking');
+  var label = btn.querySelector('span:last-child');
+  if(label){
+    label.textContent = {hi:'रोकें', en:'Stop', mr:'थांबवा'}[currentLang] || 'Stop';
+  }
+
+  utt.onend = function(){ stopSpeaking(); };
+  utt.onerror = function(e){
+    console.warn('TTS error:', e);
+    stopSpeaking();
+  };
+
+  window.speechSynthesis.cancel();
+  /* Small delay — Chrome bug: cancel + speak immediately sometimes fails */
+  setTimeout(function(){
+    window.speechSynthesis.speak(utt);
+  }, 100);
+}
+
+function changePdfLang(v){
+  pdfLang = v;
+  showToast('📄 ' + (v==='hi'?'हिंदी':v==='en'?'English + हिंदी':'मराठी'));
+  setTimeout(hideToast, 1500);
+}
+function changeVoiceLang(v){
+  voiceLang = v;
+  showToast('🔊 ' + (v==='hi'?'हिंदी':v==='en'?'English':'मराठी'));
+  setTimeout(hideToast, 1500);
+}
+
+/* ========================================================
+   PDF
+   ======================================================== */
+function buildPdfHtml(r, lang){
+  var inr = function(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); };
+  var catLabels = {
+    dairy:{hi:'डेयरी',en:'Dairy',mr:'दुग्धव्यवसाय'},
+    grocery:{hi:'किराना',en:'Grocery',mr:'किराणा'},
+    agri:{hi:'कृषि प्रसंस्करण',en:'Agri processing',mr:'कृषी प्रक्रिया'},
+    textile:{hi:'कपड़ा / टेलरिंग',en:'Textile',mr:'कापड / शिवणकाम'},
+    repair:{hi:'रिपेयर',en:'Repair',mr:'दुरुस्ती'},
+    digital:{hi:'डिजिटल सेवा',en:'Digital services',mr:'डिजिटल सेवा'},
+    craft:{hi:'हस्तशिल्प',en:'Handicraft',mr:'हस्तकला'},
+    other:{hi:'अन्य',en:'Other',mr:'इतर'}
+  };
+  var catLabel = lang==='en' ? ((catLabels[r.category]?catLabels[r.category].en:r.category) + ' / ' + (catLabels[r.category]?catLabels[r.category].hi:'')) : (catLabels[r.category]?catLabels[r.category][lang]:r.category);
+
+  var L = {
+    hi:{title:'ग्राम व्यापार सलाहकार रिपोर्ट',subtitle:'CODE NINJAS · SIH 2026 · HYPERLOCAL REPORT',
+      s1:'1. आवेदक व व्यापार विवरण',s2:'2. स्थान व क्षेत्र संदर्भ',s3:'3. वित्तीय योजना',s4:'4. अनुशंसित व्यापार',s5:'5. सरकारी योजनाएं',s6:'6. कार्य योजना',s6ai:'6. AI-व्यक्तिगत कार्य योजना',s6hl:'7. हाइपरलोकल विश्लेषण (AI)',s6exec:'8. कार्यकारी सारांश (AI)',s7:'9. आवेदन कहां करें',s8:'10. महत्वपूर्ण सूचना',
+      name:'नाम',village:'गांव',taluka:'तालुका',district:'जिला',state:'राज्य',pincode:'पिनकोड',gender:'लिंग',family:'परिवार',
+      businessCat:'व्यापार श्रेणी',subBusiness:'उप-व्यापार',experience:'अनुभव',existing:'पहले से व्यापार',land:'अपनी ज़मीन',caste:'वर्ग श्रेणी',
+      region:'क्षेत्र',mainCrops:'मुख्य फसलें',roadConnectivity:'सड़क',high:'अच्छी',medium:'मध्यम',low:'कम',
+      capital:'उपलब्ध पूंजी',projectCost:'कुल परियोजना लागत',loan:'संभावित लोन',ownContribution:'आपका योगदान',
+      subsidy:'संभावित सब्सिडी',scheme:'अनुशंसित योजना',rate:'ब्याज दर',tenure:'अवधि',moratorium:'मोहलत',emi:'मासिक EMI',
+      years:'वर्ष',months:'महीने',successRate:'सफलता की संभावना (प्रॉक्सी)',
+      bizHeader:'व्यापार',cost:'शुरुआत लागत',revenue:'मासिक आय',profit:'मासिक मुनाफा',roi:'ROI',match:'मैच स्कोर',
+      note_strong:'महत्वपूर्ण सूचना:',
+      note_text:'यह रिपोर्ट उपलब्ध सरकारी आंकड़ों पर आधारित अनुमानित विश्लेषण है। वास्तविक लोन, सब्सिडी व पात्रता के लिए अपने नज़दीकी बैंक शाखा, DIC या KVIC कार्यालय से संपर्क करें। सफलता की संभावना एक प्रॉक्सी अनुमान है, गारंटी नहीं।',
+      footer:'ग्राम व्यापार सलाहकार · Code Ninjas · SIH 2026',generatedOn:'जारी किया गया',
+      scheme1:'PMEGP: उत्पादन ₹25 लाख / सेवा ₹10 लाख तक। 15–35% सब्सिडी। KVIC/DIC से आवेदन।',
+      scheme2:'Mudra: शिशु ₹50 हज़ार, किशोर ₹50 हज़ार–₹5 लाख, तरुण ₹5–10 लाख।',
+      scheme3:'SRLM: SHG आधारित सूक्ष्म उद्यम सहायता।',
+      contact_bank:'नज़दीकी बैंक शाखा',contact_dic:'DIC — जिला उद्योग केंद्र',contact_kvic:'KVIC / KVIB राज्य कार्यालय',contact_gp:'ग्राम पंचायत / BDO'},
+    en:{title:'Village Business Advisor — Report',subtitle:'CODE NINJAS · SIH 2026 · HYPERLOCAL REPORT',
+      s1:'1. Applicant & Business Details',s2:'2. Location & Region Context',s3:'3. Financial Plan',s4:'4. Recommended Businesses',s5:'5. Government Schemes',s6:'6. Action Plan',s6ai:'6. AI-Personalized Action Plan',s6hl:'7. Hyperlocal Analysis (AI)',s6exec:'8. Executive Summary (AI)',s7:'9. Where to Apply',s8:'10. Important Note',
+      name:'Name / नाम',village:'Village / गांव',taluka:'Taluka / तालुका',district:'District / जिला',state:'State / राज्य',pincode:'Pincode',gender:'Gender',family:'Family',
+      businessCat:'Business category / व्यापार श्रेणी',subBusiness:'Sub-business',experience:'Experience',existing:'Existing business',land:'Own land',caste:'Category',
+      region:'Region',mainCrops:'Main crops',roadConnectivity:'Road',high:'Good',medium:'Moderate',low:'Low',
+      capital:'Available capital',projectCost:'Total project cost',loan:'Possible loan',ownContribution:'Your contribution',
+      subsidy:'Estimated subsidy',scheme:'Recommended scheme',rate:'Interest rate',tenure:'Tenure',moratorium:'Moratorium',emi:'Monthly EMI',
+      years:'years',months:'months',successRate:'Success Probability (proxy)',
+      bizHeader:'Business',cost:'Startup cost',revenue:'Monthly revenue',profit:'Monthly profit',roi:'ROI',match:'Match score',
+      note_strong:'Important note:',
+      note_text:'This is an estimated analysis based on available government data. For actual loan, subsidy and eligibility, contact your nearest bank branch, DIC or KVIC office. Success probability is a proxy estimate, not a guarantee.',
+      footer:'Village Business Advisor · Code Ninjas · SIH 2026',generatedOn:'Generated on',
+      scheme1:'PMEGP: Up to ₹25L manufacturing / ₹10L service; 15–35% subsidy. Apply via KVIC/DIC.',
+      scheme2:'Mudra: Shishu ₹50K, Kishore ₹50K–₹5L, Tarun ₹5L–₹10L.',
+      scheme3:'SRLM: SHG-based micro-enterprise support.',
+      contact_bank:'Nearest bank branch',contact_dic:'DIC — District Industries Centre',contact_kvic:'KVIC / KVIB State Office',contact_gp:'Gram Panchayat / BDO'},
+    mr:{title:'ग्राम व्यवसाय सल्लागार अहवाल',subtitle:'CODE NINJAS · SIH 2026 · HYPERLOCAL REPORT',
+      s1:'1. अर्जदार व व्यवसाय तपशील',s2:'2. ठिकाण व प्रदेश संदर्भ',s3:'3. आर्थिक योजना',s4:'4. शिफारस व्यवसाय',s5:'5. सरकारी योजना',s6:'6. कृती योजना',s6ai:'6. AI-वैयक्तिक कृती योजना',s6hl:'7. हायपरलोकल विश्लेषण (AI)',s6exec:'8. कार्यकारी सारांश (AI)',s7:'9. अर्ज कुठे करावा',s8:'10. महत्त्वाची सूचना',
+      name:'नाव',village:'गाव',taluka:'तालुका',district:'जिल्हा',state:'राज्य',pincode:'पिनकोड',gender:'लिंग',family:'कुटुंब',
+      businessCat:'व्यवसाय श्रेणी',subBusiness:'उप-व्यवसाय',experience:'अनुभव',existing:'आधीच व्यवसाय',land:'स्वतःची जमीन',caste:'वर्ग श्रेणी',
+      region:'प्रदेश',mainCrops:'मुख्य पिके',roadConnectivity:'रस्ता',high:'चांगली',medium:'मध्यम',low:'कमी',
+      capital:'उपलब्ध भांडवल',projectCost:'एकूण प्रकल्प खर्च',loan:'संभाव्य कर्ज',ownContribution:'तुमचं योगदान',
+      subsidy:'संभाव्य अनुदान',scheme:'शिफारस योजना',rate:'व्याज दर',tenure:'कालावधी',moratorium:'सवलत कालावधी',emi:'मासिक EMI',
+      years:'वर्षे',months:'महिने',successRate:'यशाची शक्यता (प्रॉक्सी)',
+      bizHeader:'व्यवसाय',cost:'सुरुवात खर्च',revenue:'मासिक उत्पन्न',profit:'मासिक नफा',roi:'ROI',match:'मॅच स्कोअर',
+      note_strong:'महत्त्वाची सूचना:',
+      note_text:'हा अहवाल उपलब्ध सरकारी आकडेवारीवर आधारित आहे. प्रत्यक्ष माहितीसाठी जवळच्या बँक, DIC किंवा KVIC कार्यालयाशी संपर्क साधा. यशाची शक्यता हा प्रॉक्सी अंदाज आहे, हमी नाही.',
+      footer:'ग्राम व्यवसाय सल्लागार · Code Ninjas · SIH 2026',generatedOn:'जारी',
+      scheme1:'PMEGP: उत्पादन ₹25 लाख / सेवा ₹10 लाख. 15–35% अनुदान. KVIC/DIC मार्फत.',
+      scheme2:'Mudra: शिशु ₹50 हजार, किशोर ₹50 हजार–₹5 लाख, तरुण ₹5–10 लाख.',
+      scheme3:'SRLM: बचत गट आधारित सूक्ष्म उद्योग सहाय्यता.',
+      contact_bank:'जवळची बँक शाखा',contact_dic:'DIC — जिल्हा उद्योग केंद्र',contact_kvic:'KVIC / KVIB राज्य कार्यालय',contact_gp:'ग्रामपंचायत / BDO'}
+  }[lang];
+
+  var langKey2 = lang==='mr'?'mr':lang==='en'?'en':'hi';
+  var roadText = r.insights.road==='high'?L.high:r.insights.road==='medium'?L.medium:L.low;
+  var bizList = BUSINESS_CATALOG[r.category] || BUSINESS_CATALOG.other;
+  var scoredBiz = bizList.map(function(b){
+    var copy = {};
+    for(var k in b) copy[k] = b[k];
+    copy.match = calcMatchScore(b, r);
+    return copy;
+  });
+    scoredBiz.sort(function(a,b){ return b.match - a.match; });
+
+  
+    /* 🆕 Use language-specific advice if available */
+  var advice = llmAdviceCache[lang] || null;
+
+  var aiSectionHtml = '';
+  if(advice){
+    /* Section 6: AI Personalized Action Plan (first, order matters) */
+    if(advice.custom_action_plan && advice.custom_action_plan.length){
+      aiSectionHtml += '<div class="pdf-section"><h2>' + L.s6ai + '</h2><table>' +
+        advice.custom_action_plan.map(function(a, i){
+          return '<tr><td>Step ' + (i+1) + '</td><td>' + escapeHtml(a) + '</td></tr>';
+        }).join('') +
+        '</table></div>';
+    }
+    /* Section 7: Hyperlocal Summary (AI) */
+    if(advice.hyperlocal_summary){
+      aiSectionHtml += '<div class="pdf-section"><h2>' + L.s6hl + '</h2>' +
+        '<table><tr><td style="width:100%">' + escapeHtml(advice.hyperlocal_summary) + '</td></tr></table></div>';
+    }
+    /* Section 8: Executive Summary (AI) */
+    if(advice.executive_summary){
+      aiSectionHtml += '<div class="pdf-section"><h2>' + L.s6exec + '</h2>' +
+        '<div class="pdf-note" style="border-left-color:#2E6B4E;background:#E8F5EC;color:#1A2820">' +
+        escapeHtml(advice.executive_summary) + '</div></div>';
+    }
+  } else {
+    /* Fallback: rule-based action plan in PDF language */
+    var fallbackPlan = {
+      hi: getActionPlanLang('hi'),
+      en: getActionPlanLang('en'),
+      mr: getActionPlanLang('mr')
+    }[lang] || r.actionPlan;
+    aiSectionHtml += '<div class="pdf-section"><h2>' + L.s6 + '</h2><table>' +
+      fallbackPlan.map(function(a, i){ return '<tr><td>Step ' + (i+1) + '</td><td>' + a + '</td></tr>'; }).join('') +
+      '</table></div>';
+  }
+
+  return '<div class="pdf-head"><h1>' + L.title + '</h1><div class="sub">' + L.subtitle + '</div><div class="date">' + L.generatedOn + ': ' + r.timestamp + '</div></div>' +
+    '<div class="pdf-section"><h2>' + L.s1 + '</h2><table>' +
+      '<tr><td>' + L.name + '</td><td>' + (r.name||'—') + '</td></tr>' +
+      '<tr><td>' + L.gender + '</td><td>' + r.gender + '</td></tr>' +
+      '<tr><td>' + L.family + '</td><td>' + r.family + '</td></tr>' +
+      '<tr><td>' + L.caste + '</td><td>' + r.caste + '</td></tr>' +
+      '<tr><td>' + L.businessCat + '</td><td>' + catLabel + '</td></tr>' +
+      (r.subBusiness ? '<tr><td>' + L.subBusiness + '</td><td>' + r.subBusiness + '</td></tr>' : '') +
+      '<tr><td>' + L.experience + '</td><td>' + r.experience + '</td></tr>' +
+      '<tr><td>' + L.existing + '</td><td>' + r.existing + '</td></tr>' +
+      '<tr><td>' + L.land + '</td><td>' + r.land + '</td></tr>' +
+    '</table></div>' +
+    '<div class="pdf-section"><h2>' + L.s2 + '</h2><table>' +
+      '<tr><td>' + L.village + '</td><td>' + r.village + '</td></tr>' +
+      '<tr><td>' + L.taluka + '</td><td>' + (r.taluka||'—') + '</td></tr>' +
+      '<tr><td>' + L.district + '</td><td>' + r.district + '</td></tr>' +
+      '<tr><td>' + L.state + '</td><td>' + r.state + '</td></tr>' +
+      '<tr><td>' + L.pincode + '</td><td>' + (r.pincode||'—') + '</td></tr>' +
+      '<tr><td>' + L.region + '</td><td>' + r.insights.region + '</td></tr>' +
+      '<tr><td>' + L.mainCrops + '</td><td>' + r.insights.crops + '</td></tr>' +
+      '<tr><td>' + L.roadConnectivity + '</td><td>' + roadText + '</td></tr>' +
+    '</table></div>' +
+    '<div class="pdf-section"><h2>' + L.s3 + '</h2><table>' +
+      '<tr><td>' + L.capital + '</td><td>' + inr(r.capital) + '</td></tr>' +
+      '<tr><td>' + L.projectCost + '</td><td>' + inr(r.fin.projectCost) + '</td></tr>' +
+      '<tr><td>' + L.loan + '</td><td>' + inr(r.fin.loan) + '</td></tr>' +
+      '<tr><td>' + L.ownContribution + '</td><td>' + inr(r.fin.ownContribution) + '</td></tr>' +
+      '<tr><td>' + L.subsidy + '</td><td>' + (r.fin.subsidy ? '~' + r.fin.subsidy + '%' : '—') + '</td></tr>' +
+      '<tr><td>' + L.scheme + '</td><td>' + r.fin.scheme + '</td></tr>' +
+      (r.fin.rate ? '<tr><td>' + L.rate + '</td><td>' + r.fin.rate + '%</td></tr><tr><td>' + L.tenure + '</td><td>' + r.fin.tenureYears + ' ' + L.years + '</td></tr><tr><td>' + L.moratorium + '</td><td>' + r.fin.moratorium + ' ' + L.months + '</td></tr><tr><td>' + L.emi + '</td><td><strong>' + inr(r.fin.emi) + '</strong></td></tr>' : '') +
+      '<tr><td>' + L.successRate + '</td><td><strong>' + r.successRate + '%</strong></td></tr>' +
+    '</table></div>' +
+    '<div class="pdf-section"><h2>' + L.s4 + '</h2><table>' +
+      '<tr><td><strong>' + L.bizHeader + '</strong></td><td><strong>' + L.cost + ' / ' + L.revenue + ' / ' + L.profit + ' / ' + L.roi + ' / ' + L.match + '</strong></td></tr>' +
+      scoredBiz.map(function(b){
+        var n = b[langKey2] || b.n;
+        return '<tr><td>' + b.icon + ' ' + n + '</td><td>' + inr(b.cost) + ' / ' + inr(b.rev) + ' / ' + inr(b.profit) + ' / ' + b.roi + '% / ' + b.match + '%</td></tr>';
+      }).join('') +
+    '</table></div>' +
+    '<div class="pdf-section"><h2>' + L.s5 + '</h2><table>' +
+      '<tr><td>PMEGP</td><td>' + L.scheme1 + '</td></tr>' +
+      '<tr><td>Mudra</td><td>' + L.scheme2 + '</td></tr>' +
+      '<tr><td>SRLM</td><td>' + L.scheme3 + '</td></tr>' +
+        '</table></div>' +
+    aiSectionHtml +
+    '<div class="pdf-section"><h2>' + L.s7 + '</h2><table>' +
+      '<tr><td>🏦 ' + L.contact_bank + '</td><td>' + r.fin.scheme + '</td></tr>' +
+      '<tr><td>🏛️ ' + L.contact_dic + '</td><td>' + r.district + '</td></tr>' +
+      '<tr><td>📋 ' + L.contact_kvic + '</td><td>PMEGP</td></tr>' +
+      '<tr><td>🏘️ ' + L.contact_gp + '</td><td>' + r.village + '</td></tr>' +
+    '</table></div>' +
+    '<div class="pdf-section"><h2>' + L.s8 + '</h2><div class="pdf-note"><strong>' + L.note_strong + '</strong> ' + L.note_text + '</div></div>' +
+    '<div class="pdf-footer">' + L.footer + '<br>' + L.generatedOn + ' ' + r.timestamp + '<br><span style="opacity:.7;font-size:8px">© 2026 Code Ninjas · SIH 2026 · All Rights Reserved</span></div>';
+}
+
+async function downloadPDF(){
+  if(!lastReport) return;
+  showToast(dict[currentLang].toastPdfGenerating);
+
+  var r = lastReport;
+  var lang = pdfLang || 'en';
+
+  /* 🆕 If we don't have LLM advice in target PDF language, fetch it first */
+  if(!llmAdviceCache[lang]){
+    try {
+      var backend = 'http://127.0.0.1:8000';
+      var resp = await fetch(backend + '/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          district: r.district,
+          village: r.village,
+          budget: Number(r.capital),
+          name: r.name || null,
+          language: lang
+        })
+      });
+      if(resp.ok){
+        var data = await resp.json();
+        if(data.llm_advice){
+          llmAdviceCache[lang] = data.llm_advice;
+        }
+      }
+    } catch(e){
+      console.warn('LLM fetch for PDF failed, using fallback:', e);
+    }
+  }
+
+  var html = buildPdfHtml(r, lang);
+  document.getElementById('pdf-report').innerHTML = html;
+  setTimeout(function(){
+    window.print();
+    hideToast();
+    setTimeout(function(){
+      showToast(dict[currentLang].toastPdfDone);
+      setTimeout(hideToast, 2200);
+    }, 800);
+  }, 250);
+}
+
+/* ========================================================
+   FORM CONTROLS
+   ======================================================== */
+function scrollToForm(){
+  document.getElementById('section-personal').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function restartForm(){
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('form-sections').style.display = 'block';
+  document.getElementById('progressTrack').style.display = 'flex';
+  document.getElementById('hero').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function demoFill(){
+  document.getElementById('inputName').value = currentLang==='en'?'Ramlal Patil':'रामलाल पाटील';
+  var dSel = document.getElementById('inputDistrict');
+  dSel.value = 'Pune';
+  onDistrictChange();
+  document.getElementById('inputTaluka').value = 'Haveli';
+  onTalukaChange();
+  document.getElementById('inputVillage').value = 'Wagholi';
+  document.getElementById('inputPincode').value = '412207';
+  document.getElementById('inputCapital').value = '200000';
+  clearCapitalChips();
+  var chip = document.querySelector('#categoryChips .chip[data-value="dairy"]');
+  if(chip) selectCategory(chip);
+  showToast(dict[currentLang].toastDemoFilled);
+  setTimeout(hideToast, 1800);
+}
+
+/* ========================================================
+   TOAST
+   ======================================================== */
+var toastTimer;
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', type === 'error');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 3200);
+}
+function hideToast(){
+  document.getElementById('toast').classList.remove('show');
+}
+
+/* ========================================================
+   INIT
+   ======================================================== */
+applyLang();
+setupVoiceInputs();
+populateDistricts();
+</script>
+</body>
+</html>
