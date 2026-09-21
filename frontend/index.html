@@ -2134,7 +2134,9 @@ async function downloadPDF(){
   /* 🆕 If we don't have LLM advice in target PDF language, fetch it first */
   if(!llmAdviceCache[lang]){
     try {
-      var backend = 'http://127.0.0.1:8000';
+      var backend = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+  ? 'http://127.0.0.1:8000'
+  : 'https://gramsalhakar-backend.onrender.com';
       var resp = await fetch(backend + '/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
