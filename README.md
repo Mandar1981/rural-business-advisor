@@ -36,7 +36,7 @@ Open http://localhost:5173
 
 ## License & Copyright
 
-© 2026 **Code Ninjas** (Team ID 056)
+© 2026 **Hack Ninjas** (Team ID 056)
 SIH 2026 · Problem Statement ID 26091
 
 All Rights Reserved.
